@@ -24,46 +24,42 @@
 
 ### Implementation Fases
 - Fase 1:
-	Develop a web service (WS1) that allows to do the system managing:
-		- Create Tutors
-		- Update Tutors
-		- List Tutors
-		- Create Schools
-		- Update Schools
-		- List Schools
-		- Create Courses
-		- Update Courses
-		- List Courses
-		- Create Classes
-		- Update Classes
-		- List Classes
-		- Book Tutoring
-		- WS1 should be an instance of a University
+Develop a web service (WS1) that allows to do the system managing:
+-- Create Tutors
+-- Update Tutors
+-- List Tutors
+-- Create Schools
+-- Update Schools
+-- List Schools
+-- Create Courses
+-- Update Courses
+-- List Courses
+-- Create Classes
+-- Update Classes
+-- List Classes
+-- Book Tutoring
+-- WS1 should be an instance of a University (Each University has it's own WS)
 
-	Minimum Required Endpoints:
-		- POST /explicador
-		- POST /faculdade
-		- POST /curso/{faculdade}
-		- POST /cadeira/{curso}
-		- PUT /explicador/{curso}
-		- PUT /explicador (deverá ser utilizado para definir as disponibilidades do explicador)
-		- GET /explicador
-		- GET /explicador/{nome_explicador}
-		- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
-		- POST /atendimento
+Minimum Required Endpoints:
+-- POST /explicador
+-- POST /faculdade
+-- POST /curso/{faculdade}
+-- POST /cadeira/{curso}
+-- PUT /explicador/{curso}
+-- PUT /explicador (deverá ser utilizado para definir as disponibilidades do explicador)
+-- GET /explicador
+-- GET /explicador/{nome_explicador}
+-- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
+-- POST /atendimento
 
 - Fase 2
-	Develop a web service (WS2) to do searches in the different instances of WS1 (minimum 2):
-	The services offered by WS2 must use the services exposed by the different instances of WS1.
+Develop a web service (WS2) to do searches in the different instances of WS1 (minimum 2):
+The services offered by WS2 must use the services exposed by the different instances of WS1.
 
-	Minimum Required Endpoints:
-		- POST /explicador/{universidade}
-		- PUT /explicador (must be used to define tutor schedule)
-		- PUT /explicador/{universidade}/{curso}
-		- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
-		- GET /explicador/{universidade}?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
-		- POST /atendimento/{universidade}
-
-## To Clarify
-- Is there a need for a database and an ER-Model? (most likely)
-- Fase 1: "WS1 should be an instance of a University", what does this mean? Each University has its own WS?
+Minimum Required Endpoints:
+-- POST /explicador/{universidade}
+-- PUT /explicador (must be used to define tutor schedule)
+-- PUT /explicador/{universidade}/{curso}
+-- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
+-- GET /explicador/{universidade}?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
+-- POST /atendimento/{universidade}
