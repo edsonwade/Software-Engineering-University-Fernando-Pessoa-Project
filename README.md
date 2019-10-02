@@ -57,9 +57,9 @@ Develop a web service (WS2) to do searches in the different instances of WS1 (mi
 The services offered by WS2 must use the services exposed by the different instances of WS1.
 
 Minimum Required Endpoints:
--- POST /explicador/{universidade}
--- PUT /explicador (must be used to define tutor schedule)
--- PUT /explicador/{universidade}/{curso}
--- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
--- GET /explicador/{universidade}?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
--- POST /atendimento/{universidade}
+- POST /explicador/{universidade}
+- PUT /explicador (must be used to define tutor schedule)
+- PUT /explicador/{universidade}/{curso}
+- GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
+- GET /explicador/{universidade}?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
+- POST /atendimento/{universidade}
