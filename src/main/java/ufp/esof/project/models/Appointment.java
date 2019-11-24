@@ -2,10 +2,9 @@ package ufp.esof.project.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -14,4 +13,16 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    private Language language;
+
+    private LocalTime startTime, endTime;
+
+    private DayOfWeek weekday;
+
+    @ManyToOne
+    private Student student;
+
+    @ManyToOne
+    private Explainer explainer;
 }
