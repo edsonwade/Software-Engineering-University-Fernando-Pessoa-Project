@@ -25,6 +25,7 @@ public class DegreeController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
+        // insert into database (h2)
         System.out.println(degree.toString());
         return ResponseEntity.ok().build();
     }
