@@ -3,8 +3,8 @@ package ufp.esof.project.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,11 +20,11 @@ public class Explainer {
     private Language languages;
 
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.PERSIST)
-    private List<Appointment> appointments = new ArrayList<>();
+    private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Course> courses = new ArrayList<>();
+    private Set<Course> courses = new HashSet<>();
 
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.PERSIST)
-    private List<Availability> availabilities = new ArrayList<>();
+    private Set<Availability> availabilities = new HashSet<>();
 }
