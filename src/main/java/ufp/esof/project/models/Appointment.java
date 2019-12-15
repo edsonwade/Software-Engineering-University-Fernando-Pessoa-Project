@@ -16,7 +16,7 @@ public class Appointment {
 
     private Language language;
 
-    private LocalTime startTime, endTime;
+    private LocalTime startTime;
 
     private DayOfWeek weekday;
 

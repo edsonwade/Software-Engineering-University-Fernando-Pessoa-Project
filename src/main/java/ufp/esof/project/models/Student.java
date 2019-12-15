@@ -3,8 +3,8 @@ package ufp.esof.project.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -17,7 +17,7 @@ public class Student {
     private String name;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
-    private List<Appointment> appointments = new ArrayList<>();
+    private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToOne
     private Course course;
