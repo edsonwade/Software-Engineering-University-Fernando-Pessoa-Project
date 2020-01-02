@@ -7,35 +7,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ufp.esof.project.models.Degree;
-import ufp.esof.project.repositories.DegreeRepo;
+import ufp.esof.project.services.DegreeService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/degree")
 public class DegreeController {
 
+    private DegreeService degreeService;
+
     @Autowired
-    private DegreeRepo degreeRepo;
+    public DegreeController(DegreeService degreeService) {
+        this.degreeService = degreeService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Degree>> getAllDegrees() {
-        return ResponseEntity.ok(this.degreeRepo.findAll());
+        return ResponseEntity.ok(this.degreeService.findAllDegrees());
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
-        //TODO: move logic to service
-        if (this.degreeRepo.findByName(degree.getName()).isPresent()) {
-            throw new DegreeAlreadyExistsException(degree.getName());
+        Optional<Degree> degreeOptional = this.degreeService.createDegree(degree);
+        if (degreeOptional.isPresent()) {
+            return ResponseEntity.ok(degreeOptional.get());
         }
-
-        return ResponseEntity.ok().build();
+        throw new DegreeNotCreatedException(degree.getName());
     }
 
-    //TODO: move logic to service
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Client already exists")
-    public static class DegreeAlreadyExistsException extends RuntimeException {
-        public DegreeAlreadyExistsException(String name) {
-            super("A degree with name \"" + name + "\" already exists");
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Degree not created")
+    public static class DegreeNotCreatedException extends RuntimeException {
+        public DegreeNotCreatedException(String name) {
+            super("The degree with name \"" + name + "\" was not created");
         }
     }
 }
