@@ -28,8 +28,21 @@ public class DegreeService {
         return this.degreeRepo.findByName(name);
     }
 
+    public Iterable<Degree> findAll() {
+        return this.degreeRepo.findAll();
+    }
+
     public Iterable<Degree> findAllDegrees() {
         return this.degreeRepo.findAll();
+    }
+
+    public boolean deleteById(Long id) {
+        Optional<Degree> optionalDegree = this.findById(id);
+        if (optionalDegree.isPresent()) {
+            this.degreeRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public Optional<Degree> createDegree(Degree degree) {

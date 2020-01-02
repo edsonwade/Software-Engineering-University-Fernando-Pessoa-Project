@@ -30,7 +30,6 @@ public class Degree {
     private College college;
 
     public Degree(String name) {
-        this();
         this.setName(name);
     }
 

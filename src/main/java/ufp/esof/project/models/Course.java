@@ -24,4 +24,8 @@ public class Course {
 
     @ManyToOne
     private Degree degree;
+
+    public Course(String name) {
+        this.setName(name);
+    }
 }
