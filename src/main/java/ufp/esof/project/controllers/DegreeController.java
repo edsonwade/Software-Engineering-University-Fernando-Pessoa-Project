@@ -27,6 +27,14 @@ public class DegreeController {
         return ResponseEntity.ok(this.degreeService.findAllDegrees());
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Degree> getDegreeById(@PathVariable("id") Long id) {
+        Optional<Degree> optionalDegree = this.degreeService.findById(id);
+        if (optionalDegree.isPresent())
+            return ResponseEntity.ok(optionalDegree.get());
+        throw new InvalidDegreeException(id);
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
         Optional<Degree> degreeOptional = this.degreeService.createDegree(degree);
