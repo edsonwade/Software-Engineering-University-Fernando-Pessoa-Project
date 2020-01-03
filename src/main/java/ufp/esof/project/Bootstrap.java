@@ -21,12 +21,14 @@ import java.util.Set;
 public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private DegreeRepo degreeRepo;
+    private CollegeRepo collegeRepo;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public Bootstrap(DegreeRepo degreeRepo) {
+    public Bootstrap(DegreeRepo degreeRepo, CollegeRepo collegeRepo) {
         this.degreeRepo = degreeRepo;
+        this.collegeRepo= collegeRepo;
     }
 
     @Override
@@ -36,5 +38,9 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         Degree degree = new Degree("Degree1");
 
         this.degreeRepo.save(degree);
+
+        College college = new College("Universidade Fernando Pessoa");
+
+        this.collegeRepo.save(college);
     }
 }

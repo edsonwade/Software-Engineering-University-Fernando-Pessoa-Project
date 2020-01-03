@@ -1,5 +1,7 @@
 package ufp.esof.project.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ufp.esof.project.models.College;
@@ -46,7 +48,9 @@ public class DegreeService {
     }
 
     public Optional<Degree> createDegree(Degree degree) {
-        // TODO: validate repeated names
+        Optional<Degree> degreeOptional = this.findByName(degree.getName());
+        if (degreeOptional.isPresent())
+            return Optional.empty();
         College college = degree.getCollege();
         Optional<College> optionalCollege = collegeService.findByName(college.getName());
         if (optionalCollege.isPresent()) {
