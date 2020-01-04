@@ -1,11 +1,10 @@
 package ufp.esof.project.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ufp.esof.project.models.College;
 import ufp.esof.project.models.Degree;
+import ufp.esof.project.repositories.CollegeRepo;
 import ufp.esof.project.repositories.DegreeRepo;
 
 import java.util.Optional;
@@ -14,12 +13,14 @@ import java.util.Optional;
 public class DegreeService {
 
     private DegreeRepo degreeRepo;
+    private CollegeRepo collegeRepo;
     private CollegeService collegeService;
 
     @Autowired
-    public DegreeService(DegreeRepo degreeRepo, CollegeService collegeService) {
+    public DegreeService(DegreeRepo degreeRepo, CollegeService collegeService, CollegeRepo collegeRepo) {
         this.degreeRepo = degreeRepo;
         this.collegeService = collegeService;
+        this.collegeRepo = collegeRepo;
     }
 
     public Optional<Degree> findById(Long id) {
@@ -58,5 +59,16 @@ public class DegreeService {
             return Optional.of(this.degreeRepo.save(degree));
         }
         return Optional.empty();
+    }
+
+    public Optional<Degree> editDegree(Degree currentDegree, Degree degree) {
+        //TODO: validate courses
+        currentDegree.replaceCourses(degree.getCourses());
+        currentDegree.setName(degree.getName());
+        Optional<College> optionalCollege = this.collegeRepo.findByName(degree.getCollege().getName());
+        if (optionalCollege.isEmpty())
+            return Optional.empty();
+        currentDegree.setCollege(optionalCollege.get());
+        return Optional.of(this.degreeRepo.save(currentDegree));
     }
 }

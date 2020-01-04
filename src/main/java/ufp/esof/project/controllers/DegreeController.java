@@ -44,6 +44,19 @@ public class DegreeController {
         throw new DegreeNotCreatedException(degree.getName());
     }
 
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Degree> editDegree(@PathVariable("id") Long id, @RequestBody Degree degree) {
+        Optional<Degree> degreeOptional = this.degreeService.findById(id);
+        if (degreeOptional.isEmpty())
+            throw new InvalidDegreeException(id);
+
+        degreeOptional = this.degreeService.editDegree(degreeOptional.get(), degree);
+        if (degreeOptional.isPresent())
+            return ResponseEntity.ok(degreeOptional.get());
+
+        throw new DegreeNotEditedException(id);
+    }
+
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteDegree(@PathVariable("id") Long id) {
         boolean res = this.degreeService.deleteById(id);
@@ -75,6 +88,13 @@ public class DegreeController {
     public static class InvalidDegreeException extends RuntimeException {
         public InvalidDegreeException(Long id) {
             super("The degree with id \"" + id + "\" does not exist");
+        }
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Degree not edited")
+    public static class DegreeNotEditedException extends RuntimeException {
+        public DegreeNotEditedException(Long id) {
+            super("The degree with id \"" + id + "\" was not edited");
         }
     }
 }

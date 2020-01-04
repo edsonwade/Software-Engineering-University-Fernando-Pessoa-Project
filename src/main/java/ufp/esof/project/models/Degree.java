@@ -23,7 +23,7 @@ public class Degree {
     @OneToMany(mappedBy = "degree", cascade = CascadeType.PERSIST)
     private Set<Course> courses = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne (cascade = {CascadeType.ALL})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonBackReference
@@ -38,5 +38,9 @@ public class Degree {
         this.setName(name);
         this.setCourses(courses);
         this.setCollege(college);
+    }
+
+    public void replaceCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }
