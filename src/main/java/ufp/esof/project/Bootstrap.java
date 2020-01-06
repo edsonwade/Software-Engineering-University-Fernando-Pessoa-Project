@@ -10,11 +10,11 @@ import ufp.esof.project.models.College;
 import ufp.esof.project.models.Course;
 import ufp.esof.project.models.Degree;
 import ufp.esof.project.repositories.CollegeRepo;
+import ufp.esof.project.repositories.CourseRepo;
 import ufp.esof.project.repositories.DegreeRepo;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 @Component
 @Transactional
@@ -22,13 +22,15 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private DegreeRepo degreeRepo;
     private CollegeRepo collegeRepo;
+    private CourseRepo courseRepo;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public Bootstrap(DegreeRepo degreeRepo, CollegeRepo collegeRepo) {
+    public Bootstrap(DegreeRepo degreeRepo, CollegeRepo collegeRepo, CourseRepo courseRepo) {
         this.degreeRepo = degreeRepo;
-        this.collegeRepo= collegeRepo;
+        this.collegeRepo = collegeRepo;
+        this.courseRepo = courseRepo;
     }
 
     @Override
@@ -39,8 +41,18 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
         this.degreeRepo.save(degree);
 
-        College college = new College("Universidade Fernando Pessoa");
+        ArrayList<College> colleges = new ArrayList<>();
+        colleges.add(new College("Universidade Fernando Pessoa"));
+        colleges.add(new College("Universidade Católica do Porto"));
+        colleges.add(new College("Faculdade de Engenharia da Universidade do Porto"));
 
-        this.collegeRepo.save(college);
+        this.collegeRepo.saveAll(colleges);
+
+        ArrayList<Course> courses = new ArrayList<>();
+        courses.add(new Course("Engenharia de Software"));
+        courses.add(new Course("Bases de dados"));
+
+        this.courseRepo.saveAll(courses);
+
     }
 }

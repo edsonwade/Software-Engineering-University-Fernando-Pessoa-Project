@@ -50,9 +50,10 @@ public class DegreeController {
         if (degreeOptional.isEmpty())
             throw new InvalidDegreeException(id);
 
-        degreeOptional = this.degreeService.editDegree(degreeOptional.get(), degree);
-        if (degreeOptional.isPresent())
+        degreeOptional = this.degreeService.editDegree(degreeOptional.get(), degree, id);
+        if (degreeOptional.isPresent()) {
             return ResponseEntity.ok(degreeOptional.get());
+        }
 
         throw new DegreeNotEditedException(id);
     }
