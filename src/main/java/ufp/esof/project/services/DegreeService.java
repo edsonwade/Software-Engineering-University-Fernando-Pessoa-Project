@@ -37,10 +37,6 @@ public class DegreeService {
         return this.degreeRepo.findByName(name);
     }
 
-    public Iterable<Degree> findAll() {
-        return this.degreeRepo.findAll();
-    }
-
     public Iterable<Degree> findAllDegrees() {
         return this.degreeRepo.findAll();
     }
