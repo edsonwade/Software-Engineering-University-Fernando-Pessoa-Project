@@ -39,8 +39,4 @@ public class Degree {
         this.setCourses(courses);
         this.setCollege(college);
     }
-
-    public void replaceCourses(Set<Course> courses) {
-        this.courses = courses;
-    }
 }
