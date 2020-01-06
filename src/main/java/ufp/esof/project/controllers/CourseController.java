@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import ufp.esof.project.models.Course;
 import ufp.esof.project.services.CourseService;
 
@@ -38,10 +35,30 @@ public class CourseController {
         throw new InvalidCourseException(id);
     }
 
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
+        boolean res = this.courseService.deleteById(id);
+        Optional<Course> optionalCourse = this.courseService.findById(id);
+        if (optionalCourse.isPresent())
+            throw new CourseNotDeletedException(optionalCourse.get().getName());
+
+        if (res)
+            return ResponseEntity.ok("Course deleted successfully!");
+        else
+            throw new InvalidCourseException(id);
+    }
+
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid Course")
     public static class InvalidCourseException extends RuntimeException {
         public InvalidCourseException(Long id) {
             super("The course with id " + id + " does not exist");
+        }
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Course not deleted")
+    public static class CourseNotDeletedException extends RuntimeException {
+        public CourseNotDeletedException(String name) {
+            super("The course with name \"" + name + "\" was not deleted");
         }
     }
 }

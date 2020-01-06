@@ -61,7 +61,7 @@ public class DegreeController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteDegree(@PathVariable("id") Long id) {
         boolean res = this.degreeService.deleteById(id);
-        Optional<Degree> degreeOptional = degreeService.findById(id);
+        Optional<Degree> degreeOptional = this.degreeService.findById(id);
         if (degreeOptional.isPresent())
             throw new DegreeNotDeletedException(degreeOptional.get().getName());
 

@@ -24,4 +24,13 @@ public class CourseService {
     public Optional<Course> findById(Long id) {
         return this.courseRepo.findById(id);
     }
+
+    public boolean deleteById(Long id) {
+        Optional<Course> optionalCourse = this.findById(id);
+        if (optionalCourse.isPresent()) {
+            this.courseRepo.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }
