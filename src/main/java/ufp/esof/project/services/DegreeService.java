@@ -74,16 +74,16 @@ public class DegreeService {
             currentDegree = optionalDegree.get();
 
         optionalDegree = this.degreeRepo.findByName(degree.getName());
-        if (optionalDegree.isPresent()) {
+        if (optionalDegree.isPresent())
             if (!optionalDegree.get().getId().equals(id))
                 return Optional.empty();
-        }
 
         currentDegree.setName(degree.getName());
 
-        Optional<College> optionalCollege = this.collegeRepo.findByName(degree.getCollege().getName());
+        Optional<College> optionalCollege = this.collegeService.findByName(degree.getCollege().getName());
         if (optionalCollege.isEmpty())
             return Optional.empty();
+
         currentDegree.setCollege(optionalCollege.get());
 
         return Optional.of(this.degreeRepo.save(currentDegree));

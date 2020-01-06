@@ -38,6 +38,7 @@ public class CourseService {
     }
 
     public Optional<Course> createCourse(Course course) {
+        //TODO: explainers and students
         Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
         if (optionalCourse.isPresent())
             return Optional.empty();
@@ -49,5 +50,23 @@ public class CourseService {
             return Optional.of(this.courseRepo.save(course));
         }
         return Optional.empty();
+    }
+
+    public Optional<Course> editCourse(Course currentCourse, Course course, Long id) {
+        //TODO: explainers and students
+        Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+        if (optionalCourse.isPresent())
+            if (!optionalCourse.get().getId().equals(id))
+                return Optional.empty();
+
+        currentCourse.setName(course.getName());
+
+        Optional<Degree> optionalDegree = this.degreeService.findByName(course.getDegree().getName());
+        if (optionalDegree.isEmpty())
+            return Optional.empty();
+
+        currentCourse.setDegree(optionalDegree.get());
+
+        return Optional.of(this.courseRepo.save(currentCourse));
     }
 }
