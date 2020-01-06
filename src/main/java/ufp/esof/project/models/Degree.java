@@ -1,43 +1,46 @@
 package ufp.esof.project.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
 public class Degree {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     private String name;
 
-    private Integer totalEcts;
-
     @OneToMany(mappedBy = "degree", cascade = CascadeType.PERSIST)
-    private List<Course> courses = new ArrayList<>();
+    private Set<Course> courses = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private College college;
 
-    public Degree(String name, Integer totalEcts/*, List<Course> courses, Integer collegeId*/) {
-        // TODO: ask professor how to implement logic under.
-
+    public Degree(String name) {
         this.setName(name);
-        this.setTotalEcts(totalEcts);
-//        this.setCourses(courses);
-//        this.setCollege(college);
+    }
 
-//        Optional<College> collegeOptional = CollegeRepo.findById(collegeId);
-//        if (collegeOptional.isPresent())
-//            this.college = collegeOptional.get();
-//        else
-//            throw new InvalidCollegeException(collegeId);
+    public Degree(Long id, String name, Set<Course> courses, College college) {
+        this.setId(id);
+        this.setName(name);
+        this.setCourses(courses);
+        this.setCollege(college);
+    }
+
+    public void replaceCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

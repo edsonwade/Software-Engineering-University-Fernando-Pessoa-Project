@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 public class College {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -20,4 +19,8 @@ public class College {
 
     @OneToMany(mappedBy = "college", cascade = CascadeType.PERSIST)
     private Set<Degree> degrees = new HashSet<>();
+
+    public College(String name) {
+        this.setName(name);
+    }
 }
