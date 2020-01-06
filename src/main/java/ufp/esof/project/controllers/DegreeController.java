@@ -38,9 +38,8 @@ public class DegreeController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
         Optional<Degree> degreeOptional = this.degreeService.createDegree(degree);
-        if (degreeOptional.isPresent()) {
+        if (degreeOptional.isPresent())
             return ResponseEntity.ok(degreeOptional.get());
-        }
         throw new DegreeNotCreatedException(degree.getName());
     }
 

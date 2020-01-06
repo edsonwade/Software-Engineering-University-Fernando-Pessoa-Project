@@ -48,6 +48,14 @@ public class CourseController {
             throw new InvalidCourseException(id);
     }
 
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+        Optional<Course> optionalCourse = this.courseService.createCourse(course);
+        if (optionalCourse.isPresent())
+            return ResponseEntity.ok(optionalCourse.get());
+        throw new CourseNotCreatedException(course.getName());
+    }
+
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid Course")
     public static class InvalidCourseException extends RuntimeException {
         public InvalidCourseException(Long id) {
@@ -59,6 +67,13 @@ public class CourseController {
     public static class CourseNotDeletedException extends RuntimeException {
         public CourseNotDeletedException(String name) {
             super("The course with name \"" + name + "\" was not deleted");
+        }
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Course not created")
+    public static class CourseNotCreatedException extends RuntimeException {
+        public CourseNotCreatedException(String name) {
+            super("The course with name \"" + name + "\" was not created");
         }
     }
 }
