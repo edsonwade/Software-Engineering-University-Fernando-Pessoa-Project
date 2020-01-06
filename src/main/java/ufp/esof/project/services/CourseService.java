@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ufp.esof.project.models.Course;
 import ufp.esof.project.repositories.CourseRepo;
 
+import java.util.Optional;
+
 @Service
 public class CourseService {
 
@@ -17,5 +19,9 @@ public class CourseService {
 
     public Iterable<Course> findAllCourses() {
         return this.courseRepo.findAll();
+    }
+
+    public Optional<Course> findById(Long id) {
+        return this.courseRepo.findById(id);
     }
 }
