@@ -58,6 +58,11 @@ public class DegreeService {
         Optional<Degree> degreeOptional = this.findByName(degree.getName());
         if (degreeOptional.isPresent())
             return Optional.empty();
+
+        Optional<Degree> optionalDegree = validateDegreeCourses(degree, degree);
+        if (optionalDegree.isPresent())
+            degree = optionalDegree.get();
+
         College college = degree.getCollege();
         Optional<College> optionalCollege = collegeService.findByName(college.getName());
         if (optionalCollege.isPresent()) {
@@ -68,18 +73,11 @@ public class DegreeService {
     }
 
     public Optional<Degree> editDegree(Degree currentDegree, Degree degree, Long id) {
-        Set<Course> newCourses = new HashSet<>();
-        for (Course course : degree.getCourses()) {
-            Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
-            if (optionalCourse.isEmpty())
-                return Optional.empty();
-            Course foundCourse = optionalCourse.get();
-            foundCourse.setDegree(currentDegree);
-            newCourses.add(foundCourse);
-        }
-        currentDegree.replaceCourses(newCourses);
+        Optional<Degree> optionalDegree = validateDegreeCourses(currentDegree, degree);
+        if (optionalDegree.isPresent())
+            currentDegree = optionalDegree.get();
 
-        Optional<Degree> optionalDegree = this.degreeRepo.findByName(degree.getName());
+        optionalDegree = this.degreeRepo.findByName(degree.getName());
         if (optionalDegree.isPresent()) {
             if (!optionalDegree.get().getId().equals(id))
                 return Optional.empty();
@@ -93,5 +91,19 @@ public class DegreeService {
         currentDegree.setCollege(optionalCollege.get());
 
         return Optional.of(this.degreeRepo.save(currentDegree));
+    }
+
+    public Optional<Degree> validateDegreeCourses(Degree currentDegree, Degree degree) {
+        Set<Course> newCourses = new HashSet<>();
+        for (Course course : degree.getCourses()) {
+            Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+            if (optionalCourse.isEmpty())
+                return Optional.empty();
+            Course foundCourse = optionalCourse.get();
+            foundCourse.setDegree(currentDegree);
+            newCourses.add(foundCourse);
+        }
+        currentDegree.replaceCourses(newCourses);
+        return Optional.of(currentDegree);
     }
 }
