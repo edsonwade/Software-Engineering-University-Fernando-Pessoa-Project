@@ -8,4 +8,4 @@ import java.util.Optional;
 public interface AppointmentRepo extends CrudRepository<Appointment, Long> {
   Optional<Appointment> findById(long id);
 }
-}
+

@@ -1,20 +1,23 @@
-﻿package ufp.esof.project;
+package ufp.esof.project;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import ufp.esof.project.models.College;
-import ufp.esof.project.models.Course;
-import ufp.esof.project.models.Degree;
-import ufp.esof.project.repositories.CollegeRepo;
-import ufp.esof.project.repositories.CourseRepo;
-import ufp.esof.project.repositories.DegreeRepo;
+import ufp.esof.project.models.*;
+import ufp.esof.project.repositories.*;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @Transactional
@@ -58,7 +61,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
-    public BootStrapData(ExplainerRepo explainerRepo, CourseRepo courseRepo, AvailabilityRepo availabilityRepo, DegreeRepo degreeRepo, CollegeRepo collegeRepo, AppointmentRepo appointmentRepo, StudentRepo studentRepo) {
+    public Bootstrap(ExplainerRepo explainerRepo, CourseRepo courseRepo, AvailabilityRepo availabilityRepo, DegreeRepo degreeRepo, CollegeRepo collegeRepo, AppointmentRepo appointmentRepo, StudentRepo studentRepo) {
 
         this.explainerRepo = explainerRepo;
         this.courseRepo = courseRepo;
@@ -71,7 +74,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
     }
 
 
-    }
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
