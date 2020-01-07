@@ -43,8 +43,11 @@ public class CourseService {
     }
 
     public Optional<Course> createCourse(Course course) {
-        //TODO: explainers and students
-        Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+        Optional<Course> optionalCourse = this.validateExplainers(course, course);
+        if (optionalCourse.isPresent())
+            course = optionalCourse.get();
+
+        optionalCourse = this.courseRepo.findByName(course.getName());
         if (optionalCourse.isPresent())
             return Optional.empty();
 
@@ -58,19 +61,11 @@ public class CourseService {
     }
 
     public Optional<Course> editCourse(Course currentCourse, Course course, Long id) {
-        Set<Explainer> newExplainers = new HashSet<>();
-        for (Explainer explainer : course.getExplainers()) {
-            Optional<Explainer> optionalExplainer = this.explainerService.findExplainerByName(explainer.getName());
-            if (optionalExplainer.isEmpty())
-                return Optional.empty();
-            Explainer foundExplainer = optionalExplainer.get();
-            foundExplainer.addCourse(currentCourse);
-            newExplainers.add(foundExplainer);
-        }
+        Optional<Course> optionalCourse = this.validateExplainers(currentCourse, course);
+        if (optionalCourse.isPresent())
+            currentCourse = optionalCourse.get();
 
-        currentCourse.setExplainers(newExplainers);
-
-        Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+        optionalCourse = this.courseRepo.findByName(course.getName());
         if (optionalCourse.isPresent())
             if (!optionalCourse.get().getId().equals(id))
                 return Optional.empty();
@@ -84,5 +79,20 @@ public class CourseService {
         currentCourse.setDegree(optionalDegree.get());
 
         return Optional.of(this.courseRepo.save(currentCourse));
+    }
+
+    public Optional<Course> validateExplainers(Course currentCourse, Course course) {
+        Set<Explainer> newExplainers = new HashSet<>();
+        for (Explainer explainer : course.getExplainers()) {
+            Optional<Explainer> optionalExplainer = this.explainerService.findExplainerByName(explainer.getName());
+            if (optionalExplainer.isEmpty())
+                return Optional.empty();
+            Explainer foundExplainer = optionalExplainer.get();
+            foundExplainer.addCourse(currentCourse);
+            newExplainers.add(foundExplainer);
+        }
+
+        currentCourse.setExplainers(newExplainers);
+        return Optional.of(currentCourse);
     }
 }
