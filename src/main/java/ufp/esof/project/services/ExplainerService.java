@@ -1,23 +1,28 @@
 package ufp.esof.project.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import ufp.esof.project.filters.FilterObject;
 import ufp.esof.project.models.Explainer;
-import ufp.esof.project.repositories.ExplainerRepo;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
-public class ExplainerService {
+@Repository
+public interface ExplainerService {
 
-    private ExplainerRepo explainerRepo;
+    Optional<Explainer> getById(long id);
 
-    @Autowired
-    public ExplainerService(ExplainerRepo explainerRepo) {
-        this.explainerRepo = explainerRepo;
-    }
+    Set<Explainer> getFilteredExplainer(FilterObject filterObject);
 
-    public Optional<Explainer> findByName(String name) {
-        return this.explainerRepo.findByName(name);
-    }
+    Optional<Explainer> findExplainerByName(String name);
+
+    Set<Explainer> findAllExplainers();
+
+    Explainer save(Explainer explainer);
+
+    Optional<Explainer> saveExplainer(Explainer explainer, String courseName);
+
+
 }

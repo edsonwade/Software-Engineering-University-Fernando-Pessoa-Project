@@ -34,4 +34,15 @@ public class Course {
     public Course(String name) {
         this.setName(name);
     }
+
+    public void addExplainer(Explainer explainer) {
+        this.explainers.add(explainer);
+    }
+
+    public void removeExplainer(Explainer explainer) {
+        this.explainers.remove(explainer);
+    }
+
+
+
 }

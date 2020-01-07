@@ -25,10 +25,6 @@ public class CourseService {
         this.explainerService = explainerService;
     }
 
-    public Optional<Course> findByName(String name) {
-        return this.courseRepo.findByName(name);
-    }
-
     public Iterable<Course> findAllCourses() {
         return this.courseRepo.findAll();
     }
@@ -65,7 +61,7 @@ public class CourseService {
         //TODO: students
         Set<Explainer> newExplainers = new HashSet<>();
         for (Explainer explainer : course.getExplainers()) {
-            Optional<Explainer> optionalExplainer = this.explainerService.findByName(explainer.getName());
+            Optional<Explainer> optionalExplainer = this.explainerService.findExplainerByName(explainer.getName());
             if (optionalExplainer.isEmpty())
                 return Optional.empty();
             Explainer foundExplainer = optionalExplainer.get();
