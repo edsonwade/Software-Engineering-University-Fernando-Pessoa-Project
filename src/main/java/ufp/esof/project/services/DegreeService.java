@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ufp.esof.project.models.College;
 import ufp.esof.project.models.Course;
 import ufp.esof.project.models.Degree;
-import ufp.esof.project.repositories.CollegeRepo;
 import ufp.esof.project.repositories.CourseRepo;
 import ufp.esof.project.repositories.DegreeRepo;
 
@@ -17,15 +16,13 @@ import java.util.Set;
 public class DegreeService {
 
     private DegreeRepo degreeRepo;
-    private CollegeRepo collegeRepo;
     private CourseRepo courseRepo;
     private CollegeService collegeService;
 
     @Autowired
-    public DegreeService(DegreeRepo degreeRepo, CollegeService collegeService, CollegeRepo collegeRepo, CourseRepo courseRepo) {
+    public DegreeService(DegreeRepo degreeRepo, CollegeService collegeService, CourseRepo courseRepo) {
         this.degreeRepo = degreeRepo;
         this.collegeService = collegeService;
-        this.collegeRepo = collegeRepo;
         this.courseRepo = courseRepo;
     }
 
@@ -35,10 +32,6 @@ public class DegreeService {
 
     public Optional<Degree> findByName(String name) {
         return this.degreeRepo.findByName(name);
-    }
-
-    public Iterable<Degree> findAll() {
-        return this.degreeRepo.findAll();
     }
 
     public Iterable<Degree> findAllDegrees() {
@@ -78,16 +71,16 @@ public class DegreeService {
             currentDegree = optionalDegree.get();
 
         optionalDegree = this.degreeRepo.findByName(degree.getName());
-        if (optionalDegree.isPresent()) {
+        if (optionalDegree.isPresent())
             if (!optionalDegree.get().getId().equals(id))
                 return Optional.empty();
-        }
 
         currentDegree.setName(degree.getName());
 
-        Optional<College> optionalCollege = this.collegeRepo.findByName(degree.getCollege().getName());
+        Optional<College> optionalCollege = this.collegeService.findByName(degree.getCollege().getName());
         if (optionalCollege.isEmpty())
             return Optional.empty();
+
         currentDegree.setCollege(optionalCollege.get());
 
         return Optional.of(this.degreeRepo.save(currentDegree));
@@ -103,7 +96,7 @@ public class DegreeService {
             foundCourse.setDegree(currentDegree);
             newCourses.add(foundCourse);
         }
-        currentDegree.replaceCourses(newCourses);
+        currentDegree.setCourses(newCourses);
         return Optional.of(currentDegree);
     }
 }

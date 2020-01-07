@@ -38,9 +38,8 @@ public class DegreeController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
         Optional<Degree> degreeOptional = this.degreeService.createDegree(degree);
-        if (degreeOptional.isPresent()) {
+        if (degreeOptional.isPresent())
             return ResponseEntity.ok(degreeOptional.get());
-        }
         throw new DegreeNotCreatedException(degree.getName());
     }
 
@@ -51,9 +50,8 @@ public class DegreeController {
             throw new InvalidDegreeException(id);
 
         degreeOptional = this.degreeService.editDegree(degreeOptional.get(), degree, id);
-        if (degreeOptional.isPresent()) {
+        if (degreeOptional.isPresent())
             return ResponseEntity.ok(degreeOptional.get());
-        }
 
         throw new DegreeNotEditedException(id);
     }
@@ -61,7 +59,7 @@ public class DegreeController {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteDegree(@PathVariable("id") Long id) {
         boolean res = this.degreeService.deleteById(id);
-        Optional<Degree> degreeOptional = degreeService.findById(id);
+        Optional<Degree> degreeOptional = this.degreeService.findById(id);
         if (degreeOptional.isPresent())
             throw new DegreeNotDeletedException(degreeOptional.get().getName());
 

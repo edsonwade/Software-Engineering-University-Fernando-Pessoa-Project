@@ -23,9 +23,6 @@ public class Course {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Explainer> explainers = new HashSet<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST)
-    private Set<Student> students = new HashSet<>();
-
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @EqualsAndHashCode.Exclude
     @JsonBackReference
@@ -42,7 +39,4 @@ public class Course {
     public void removeExplainer(Explainer explainer) {
         this.explainers.remove(explainer);
     }
-
-
-
 }

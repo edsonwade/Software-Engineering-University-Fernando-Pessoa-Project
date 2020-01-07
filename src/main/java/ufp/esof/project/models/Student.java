@@ -3,6 +3,7 @@ package ufp.esof.project.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Data
 @Entity
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Student {
 
     @Id
@@ -23,30 +25,22 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ManyToOne
-    private Course course;
-
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany( mappedBy = "",cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    private Set<Explainer> explainers=new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    private Set<Explainer> explainers = new HashSet<>();
 
-    public Student(String username) {
-
+    public Student(String name) {
         this.setName(name);
     }
 
-    public void addExplainer(Explainer explainer){
+    public void addExplainer(Explainer explainer) {
         this.explainers.add(explainer);
     }
 
-    public void addAppointment(Appointment appointment){
+    public void addAppointment(Appointment appointment) {
         this.appointments.add(appointment);
         appointment.setStudent(this);
-    }
-
-    public Student (){
-
     }
 }

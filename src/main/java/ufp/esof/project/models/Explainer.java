@@ -1,9 +1,11 @@
 package ufp.esof.project.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,8 +14,7 @@ import java.util.Set;
 
 @Data
 @Entity
-
-
+@NoArgsConstructor
 public class Explainer {
 
     @Id
@@ -21,20 +22,22 @@ public class Explainer {
     private Long Id;
 
     private String name;
+
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     @ToString.Exclude
     @Enumerated
     private Language languages;
 
-
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Appointment> appointments = new HashSet<>();
 
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore
-    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @EqualsAndHashCode.Exclude
+    @JsonBackReference
+    @ToString.Exclude
     private Set<Course> courses = new HashSet<>();
 
     @EqualsAndHashCode.Exclude
@@ -43,13 +46,27 @@ public class Explainer {
     @OneToMany(mappedBy = "explainer", cascade = {CascadeType.PERSIST, CascadeType.ALL})
     private Set<Availability> availabilities = new HashSet<>();
 
+    public Explainer(String name) {
+        this.setName(name);
+    }
+
+    public Explainer(String name, Language language) {
+        {
+            this.setName(name);
+            this.setLanguages(language);
+        }
+        this.languages = language;
+    }
+
+    public void addCourse(Course course) {
+        this.courses.add(course);
+    }
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.ALL})
     private Set<Student> students = new HashSet<>();
-
 
     @JsonInclude
     @ToString.Include
@@ -71,14 +88,11 @@ public class Explainer {
         return names;
     }
 
-
     public void update(Explainer explainer) {
         this.setStudents(explainer.getStudents());
         this.setCourses(explainer.getCourses());
     }
 
-
-    // add worktime a um explicador
     public void addAvailabilityToExpaliner(Availability availability) {
         availabilities.add(availability);
         availability.setExplainer(this);
@@ -103,22 +117,8 @@ public class Explainer {
         return false;
     }
 
-    public Explainer(String name, Language language) {
-        {
-            this.setName(name);
-            this.setLanguages(language);
-        }
-        this.languages = language;
-    }
-
     public void addStudent(Student student) {
         this.students.add(student);
         student.addExplainer(this);
     }
-
-    public Explainer() {
-
-    }
 }
-
-

@@ -20,7 +20,7 @@ public class Degree {
 
     private String name;
 
-    @OneToMany(mappedBy = "degree", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "degree", cascade = CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
 
     @ManyToOne(cascade = {CascadeType.ALL})
@@ -38,9 +38,5 @@ public class Degree {
         this.setName(name);
         this.setCourses(courses);
         this.setCollege(college);
-    }
-
-    public void replaceCourses(Set<Course> courses) {
-        this.courses = courses;
     }
 }
