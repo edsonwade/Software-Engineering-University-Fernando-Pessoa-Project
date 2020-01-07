@@ -58,7 +58,6 @@ public class CourseService {
     }
 
     public Optional<Course> editCourse(Course currentCourse, Course course, Long id) {
-        //TODO: students
         Set<Explainer> newExplainers = new HashSet<>();
         for (Explainer explainer : course.getExplainers()) {
             Optional<Explainer> optionalExplainer = this.explainerService.findExplainerByName(explainer.getName());

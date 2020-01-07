@@ -25,24 +25,21 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ManyToOne
-    private Course course;
-
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     @ToString.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    private Set<Explainer> explainers=new HashSet<>();
+    private Set<Explainer> explainers = new HashSet<>();
 
-    public Student(String username) {
+    public Student(String name) {
         this.setName(name);
     }
 
-    public void addExplainer(Explainer explainer){
+    public void addExplainer(Explainer explainer) {
         this.explainers.add(explainer);
     }
 
-    public void addAppointment(Appointment appointment){
+    public void addAppointment(Appointment appointment) {
         this.appointments.add(appointment);
         appointment.setStudent(this);
     }

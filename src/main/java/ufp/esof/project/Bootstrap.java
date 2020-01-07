@@ -8,6 +8,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import ufp.esof.project.models.*;
 import ufp.esof.project.repositories.*;
+
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -35,7 +36,6 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
     public Bootstrap(ExplainerRepo explainerRepo, CourseRepo courseRepo, AvailabilityRepo availabilityRepo, DegreeRepo degreeRepo, CollegeRepo collegeRepo, AppointmentRepo appointmentRepo, StudentRepo studentRepo) {
         this.explainerRepo = explainerRepo;
         this.courseRepo = courseRepo;
-        this.explainerRepo = explainerRepo;
         this.studentRepo = studentRepo;
         this.appointmentRepo = appointmentRepo;
         this.availabilityRepo = availabilityRepo;
@@ -69,10 +69,10 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         Language language3 = Language.Italian;
         Language language4 = Language.Spanish;
 
-        Explainer explainer1 = new Explainer("Vanilson", language1);
-        Explainer explainer2 = new Explainer("João", language2);
-        Explainer explainer3 = new Explainer("Filipe", language3);
-        Explainer explainer4 = new Explainer("Alexandre", language4);
+        Explainer explainer1 = new Explainer("Alexandro", language1);
+        Explainer explainer2 = new Explainer("Feliz", language2);
+        Explainer explainer3 = new Explainer("Borges Gouveia", language3);
+        Explainer explainer4 = new Explainer("André", language4);
 
         Set<Explainer> explainers = new HashSet<>();
         explainers.add(explainer1);
@@ -119,5 +119,12 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
         this.appointmentRepo.saveAll(appointments1);
         this.appointmentRepo.saveAll(appointments2);
+
+        Set<Student> students = new HashSet<>();
+        students.add(new Student("João"));
+        students.add(new Student("Vanilson"));
+        students.add(new Student("Filipe"));
+
+        this.studentRepo.saveAll(students);
     }
 }

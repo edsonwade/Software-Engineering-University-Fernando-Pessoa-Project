@@ -30,12 +30,14 @@ public class Explainer {
     private Language languages;
 
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
     @JsonBackReference
+    @ToString.Exclude
     private Set<Course> courses = new HashSet<>();
 
     @EqualsAndHashCode.Exclude

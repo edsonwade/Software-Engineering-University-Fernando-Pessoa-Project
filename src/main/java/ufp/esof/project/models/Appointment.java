@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -13,15 +14,12 @@ import java.time.LocalDateTime;
 
  @Data
  @Entity
-
- @ToString
+ @NoArgsConstructor
  public class Appointment {
-
 
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
-
 
      @ManyToOne
      @JsonIgnore
@@ -47,12 +45,7 @@ import java.time.LocalDateTime;
      }
 
      public Appointment(Explainer explainer) {
-
          this.setExplainer(explainer);
-     }
-
-     public Appointment() {
-
      }
 
      public boolean overlaps(Appointment other) {
@@ -68,6 +61,4 @@ import java.time.LocalDateTime;
      private boolean isBetween(LocalDateTime timeToCheck) {
          return this.startTime.isBefore(timeToCheck) && this.expectedEndTime.isAfter(timeToCheck);
      }
-
-
  }

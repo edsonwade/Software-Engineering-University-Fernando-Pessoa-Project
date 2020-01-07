@@ -41,17 +41,10 @@ public class ExplainerServiceImpl implements ExplainerService {
     }
 
     public Optional<Explainer> findExplainerByName(String name) {
-
-        for (Explainer explainer : findAllExplainers()) {
-            if (explainer.getName().equalsIgnoreCase(name)) {
-                return Optional.of(explainer);
-            }
-        }
-        return Optional.empty();
+        return this.explainerRepo.findByName(name);
     }
 
     public Set<Explainer> findAllExplainers() {
-
         Set<Explainer> explainers = new HashSet<>();
         for (Explainer explainer : this.explainerRepo.findAll()) {
             explainers.add(explainer);
@@ -64,7 +57,6 @@ public class ExplainerServiceImpl implements ExplainerService {
     }
 
     public Optional<Explainer> saveExplainer(Explainer explainer, String courseName) {
-
         Optional<Course> courseOptional = this.courseRepo.findByName(courseName);
         if (courseOptional.isPresent()) {
             Course course = courseOptional.get();
@@ -74,6 +66,5 @@ public class ExplainerServiceImpl implements ExplainerService {
             return explainerRepo.findByName(explainer.getName());
         }
         return Optional.empty();
-
     }
 }
