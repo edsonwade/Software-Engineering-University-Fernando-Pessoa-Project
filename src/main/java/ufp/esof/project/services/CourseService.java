@@ -43,9 +43,10 @@ public class CourseService {
     }
 
     public Optional<Course> createCourse(Course course) {
+        Course newCourse = new Course();
         Optional<Course> optionalCourse = this.validateExplainers(course, course);
         if (optionalCourse.isPresent())
-            course = optionalCourse.get();
+            newCourse = optionalCourse.get();
 
         optionalCourse = this.courseRepo.findByName(course.getName());
         if (optionalCourse.isPresent())
@@ -54,31 +55,31 @@ public class CourseService {
         Degree degree = course.getDegree();
         Optional<Degree> optionalDegree = this.degreeService.findByName(degree.getName());
         if (optionalDegree.isPresent()) {
-            course.setDegree(optionalDegree.get());
-            return Optional.of(this.courseRepo.save(course));
+            newCourse.setDegree(optionalDegree.get());
+            return Optional.of(this.courseRepo.save(newCourse));
         }
         return Optional.empty();
     }
 
     public Optional<Course> editCourse(Course currentCourse, Course course, Long id) {
+        Course newCourse = new Course();
         Optional<Course> optionalCourse = this.validateExplainers(currentCourse, course);
         if (optionalCourse.isPresent())
-            currentCourse = optionalCourse.get();
+            newCourse = optionalCourse.get();
 
         optionalCourse = this.courseRepo.findByName(course.getName());
-        if (optionalCourse.isPresent())
-            if (!optionalCourse.get().getId().equals(id))
-                return Optional.empty();
+        if (optionalCourse.isPresent() && (!optionalCourse.get().getId().equals(id)))
+            return Optional.empty();
 
-        currentCourse.setName(course.getName());
+        newCourse.setName(course.getName());
 
         Optional<Degree> optionalDegree = this.degreeService.findByName(course.getDegree().getName());
         if (optionalDegree.isEmpty())
             return Optional.empty();
 
-        currentCourse.setDegree(optionalDegree.get());
+        newCourse.setDegree(optionalDegree.get());
 
-        return Optional.of(this.courseRepo.save(currentCourse));
+        return Optional.of(this.courseRepo.save(newCourse));
     }
 
     public Optional<Course> validateExplainers(Course currentCourse, Course course) {
