@@ -48,42 +48,43 @@ public class DegreeService {
     }
 
     public Optional<Degree> createDegree(Degree degree) {
+        Degree newDegree = new Degree();
         Optional<Degree> degreeOptional = this.findByName(degree.getName());
         if (degreeOptional.isPresent())
             return Optional.empty();
 
         Optional<Degree> optionalDegree = validateDegreeCourses(degree, degree);
         if (optionalDegree.isPresent())
-            degree = optionalDegree.get();
+            newDegree = optionalDegree.get();
 
         College college = degree.getCollege();
         Optional<College> optionalCollege = collegeService.findByName(college.getName());
         if (optionalCollege.isPresent()) {
-            degree.setCollege(optionalCollege.get());
-            return Optional.of(this.degreeRepo.save(degree));
+            newDegree.setCollege(optionalCollege.get());
+            return Optional.of(this.degreeRepo.save(newDegree));
         }
         return Optional.empty();
     }
 
     public Optional<Degree> editDegree(Degree currentDegree, Degree degree, Long id) {
+        Degree newDegree = new Degree();
         Optional<Degree> optionalDegree = validateDegreeCourses(currentDegree, degree);
         if (optionalDegree.isPresent())
-            currentDegree = optionalDegree.get();
+            newDegree = optionalDegree.get();
 
         optionalDegree = this.degreeRepo.findByName(degree.getName());
-        if (optionalDegree.isPresent())
-            if (!optionalDegree.get().getId().equals(id))
-                return Optional.empty();
+        if (optionalDegree.isPresent() && (!optionalDegree.get().getId().equals(id)))
+            return Optional.empty();
 
-        currentDegree.setName(degree.getName());
+        newDegree.setName(degree.getName());
 
         Optional<College> optionalCollege = this.collegeService.findByName(degree.getCollege().getName());
         if (optionalCollege.isEmpty())
             return Optional.empty();
 
-        currentDegree.setCollege(optionalCollege.get());
+        newDegree.setCollege(optionalCollege.get());
 
-        return Optional.of(this.degreeRepo.save(currentDegree));
+        return Optional.of(this.degreeRepo.save(newDegree));
     }
 
     public Optional<Degree> validateDegreeCourses(Degree currentDegree, Degree degree) {
