@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-
 @Component
 public class ExplainerServiceImpl implements ExplainerService {
 
@@ -22,7 +21,6 @@ public class ExplainerServiceImpl implements ExplainerService {
     private ExplainerRepo explainerRepo;
 
     private CourseRepo courseRepo;
-
 
     public ExplainerServiceImpl(ExplainerFilterService explainerFilterService, ExplainerRepo explainerRepo, CourseRepo courseRepo) {
         this.explainerRepo = explainerRepo;
@@ -52,19 +50,54 @@ public class ExplainerServiceImpl implements ExplainerService {
         return Collections.unmodifiableSet(explainers);
     }
 
-    public Explainer save(Explainer explainer) {
-        return this.explainerRepo.save(explainer);
+    public Optional<Explainer> saveExplainer(Explainer explainer) {
+        Explainer newExplainer = new Explainer();
+        Optional<Explainer> explainerOptional = this.findExplainerByName(explainer.getName());
+        if (explainerOptional.isPresent())
+            return Optional.empty();
+
+        explainerOptional = validateExplainerCourses(explainer, explainer);
+        if (explainerOptional.isPresent())
+            newExplainer = explainerOptional.get();
+
+        return Optional.of(this.explainerRepo.save(newExplainer));
     }
 
-    public Optional<Explainer> saveExplainer(Explainer explainer, String courseName) {
-        Optional<Course> courseOptional = this.courseRepo.findByName(courseName);
-        if (courseOptional.isPresent()) {
-            Course course = courseOptional.get();
+    public Optional<Explainer> editExplainer(Explainer currentExplainer, Explainer explainer, Long id) {
+        Explainer newExplainer = new Explainer();
+        Optional<Explainer> optionalExplainer = validateExplainerCourses(currentExplainer, explainer);
+        if (optionalExplainer.isPresent())
+            newExplainer = optionalExplainer.get();
 
-            course.addExplainer(explainer);
-            courseRepo.save(course);
-            return explainerRepo.findByName(explainer.getName());
+        optionalExplainer = this.explainerRepo.findByName(explainer.getName());
+        if (optionalExplainer.isPresent() && (!optionalExplainer.get().getId().equals(id)))
+            return Optional.empty();
+
+        newExplainer.setName(explainer.getName());
+
+        return Optional.of(this.explainerRepo.save(newExplainer));
+    }
+
+    public boolean deleteById(Long id) {
+        Optional<Explainer> optionalExplainer = this.getById(id);
+        if (optionalExplainer.isPresent()) {
+            this.explainerRepo.deleteById(id);
+            return true;
         }
-        return Optional.empty();
+        return false;
+    }
+
+    public Optional<Explainer> validateExplainerCourses(Explainer currentExplainer, Explainer explainer) {
+        Set<Course> newCourses = new HashSet<>();
+        for (Course course : explainer.getCourses()) {
+            Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+            if (optionalCourse.isEmpty())
+                return Optional.empty();
+            Course foundCourse = optionalCourse.get();
+            foundCourse.addExplainer(currentExplainer);
+            newCourses.add(foundCourse);
+        }
+        currentExplainer.setCourses(newCourses);
+        return Optional.of(currentExplainer);
     }
 }
