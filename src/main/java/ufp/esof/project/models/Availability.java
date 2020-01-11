@@ -1,5 +1,6 @@
 package ufp.esof.project.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -33,10 +34,9 @@ public class Availability {
     @JsonSerialize(using = LocalTimeSerializer.class)
     private LocalTime end;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference
     private Explainer explainer;
 
     public Availability(DayOfWeek dayOfWeek, LocalTime start, LocalTime end) {

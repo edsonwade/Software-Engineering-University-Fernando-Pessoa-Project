@@ -20,9 +20,9 @@ public interface ExplainerService {
 
     Set<Explainer> findAllExplainers();
 
-    Explainer save(Explainer explainer);
+    Optional<Explainer> saveExplainer(Explainer explainer);
 
-    Optional<Explainer> saveExplainer(Explainer explainer, String courseName);
+    Optional<Explainer> editExplainer(Explainer currentExplainer, Explainer explainer, Long id);
 
-
+    boolean deleteById(Long id);
 }
