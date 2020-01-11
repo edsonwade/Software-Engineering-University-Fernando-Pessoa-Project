@@ -43,9 +43,6 @@ public class CollegeController {
             throw new InvalidCollegeException(id);
 
         boolean res = this.collegeService.deleteById(id);
-//        optionalCollege = this.collegeService.findById(id);
-//        if (optionalCollege.isPresent())
-//            throw new CollegeNotDeletedException(optionalCollege.get().getName());
 
         if (res)
             return ResponseEntity.ok("College deleted successfully!");
