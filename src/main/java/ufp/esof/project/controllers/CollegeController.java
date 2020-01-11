@@ -42,12 +42,9 @@ public class CollegeController {
         if (optionalCollege.isEmpty())
             throw new InvalidCollegeException(id);
 
-        boolean res = this.collegeService.deleteById(id);
-
-        if (res)
+        if (this.collegeService.deleteById(id))
             return ResponseEntity.ok("College deleted successfully!");
-        else
-            throw new CollegeNotEmptyException(id);
+        throw new CollegeNotEmptyException(id);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -75,13 +72,6 @@ public class CollegeController {
     public static class InvalidCollegeException extends RuntimeException {
         public InvalidCollegeException(Long id) {
             super("The college with id " + id + " does not exist");
-        }
-    }
-
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "College not deleted")
-    public static class CollegeNotDeletedException extends RuntimeException {
-        public CollegeNotDeletedException(String name) {
-            super("The college with name \"" + name + "\" was not deleted");
         }
     }
 
