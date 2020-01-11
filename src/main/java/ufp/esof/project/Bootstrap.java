@@ -47,14 +47,14 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         logger.debug("Startup");
 
-        Degree degree = new Degree("Degree1");
+        Degree degree = new Degree("Engenharia Informática");
 
         this.degreeRepo.save(degree);
 
         ArrayList<College> colleges = new ArrayList<>();
-        colleges.add(new College("Universidade Fernando Pessoa"));
-        colleges.add(new College("Universidade Católica do Porto"));
-        colleges.add(new College("Faculdade de Engenharia da Universidade do Porto"));
+        colleges.add(new College("Faculdade de Ciências da UFP"));
+        colleges.add(new College("Faculdade de Letras da UFP"));
+        colleges.add(new College("Faculdade de Arquitectura da UFP"));
 
         this.collegeRepo.saveAll(colleges);
 

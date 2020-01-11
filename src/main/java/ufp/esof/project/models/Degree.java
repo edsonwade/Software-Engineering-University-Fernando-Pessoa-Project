@@ -4,15 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Id;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,8 +22,7 @@ public class Degree {
     @OneToMany(mappedBy = "degree", cascade = CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
 
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @ToString.Exclude
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @EqualsAndHashCode.Exclude
     @JsonBackReference
     private College college;
