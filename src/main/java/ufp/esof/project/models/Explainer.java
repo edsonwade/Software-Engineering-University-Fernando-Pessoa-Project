@@ -117,6 +117,5 @@ public class Explainer {
 
     public void addStudent(Student student) {
         this.students.add(student);
-//        student.addExplainer(this);
     }
 }
