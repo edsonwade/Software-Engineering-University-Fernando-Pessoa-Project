@@ -29,9 +29,7 @@ public class Explainer {
     @Enumerated
     private Language languages;
 
-    @OneToMany(mappedBy = "explainer", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "explainer", cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -119,6 +117,6 @@ public class Explainer {
 
     public void addStudent(Student student) {
         this.students.add(student);
-        student.addExplainer(this);
+//        student.addExplainer(this);
     }
 }

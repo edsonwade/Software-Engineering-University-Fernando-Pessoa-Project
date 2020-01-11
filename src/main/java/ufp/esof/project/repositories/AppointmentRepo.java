@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 import ufp.esof.project.models.Appointment;
 
 import java.util.Optional;
+
 @Repository
 public interface AppointmentRepo extends CrudRepository<Appointment, Long> {
-  Optional<Appointment> findById(long id);
+    Optional<Appointment> findById(long id);
 }
 

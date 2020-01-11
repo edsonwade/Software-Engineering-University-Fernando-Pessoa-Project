@@ -82,10 +82,10 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
         explainerRepo.saveAll(explainers);
 
-        LocalTime start1 = LocalTime.of(10, 00);
+        LocalTime start1 = LocalTime.of(10, 0);
         LocalTime end1 = LocalTime.of(11, 30);
         LocalTime start2 = LocalTime.of(9, 30);
-        LocalTime end2 = LocalTime.of(10, 00);
+        LocalTime end2 = LocalTime.of(10, 0);
 
         DayOfWeek dayOfWeek0 = DayOfWeek.MONDAY;
         DayOfWeek dayOfWeek1 = DayOfWeek.FRIDAY;
