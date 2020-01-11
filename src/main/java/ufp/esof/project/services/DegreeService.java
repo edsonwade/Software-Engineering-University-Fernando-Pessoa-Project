@@ -91,8 +91,9 @@ public class DegreeService {
         Set<Course> newCourses = new HashSet<>();
         for (Course course : degree.getCourses()) {
             Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
-            if (optionalCourse.isEmpty())
+            if (optionalCourse.isEmpty()) {
                 return Optional.empty();
+            }
             Course foundCourse = optionalCourse.get();
             foundCourse.setDegree(currentDegree);
             newCourses.add(foundCourse);
