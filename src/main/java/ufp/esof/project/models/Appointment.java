@@ -45,6 +45,7 @@ public class Appointment {
         this.expectedEndTime = end;
     }
 
+
     public Appointment(Long id) {
         this.setId(id);
     }
@@ -52,6 +53,7 @@ public class Appointment {
     public Appointment(Explainer explainer) {
         this.setExplainer(explainer);
     }
+
 
     public boolean overlaps(Appointment other) {
         return this.isBetween(other) || other.isBetween(this) || (this.startTime.equals(other.startTime) && this.expectedEndTime.equals(other.expectedEndTime));

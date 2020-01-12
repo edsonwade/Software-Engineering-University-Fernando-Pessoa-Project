@@ -13,6 +13,7 @@ import java.util.Optional;
 
 
 @Controller
+@RestController
 @RequestMapping("/college")
 public class CollegeController {
 

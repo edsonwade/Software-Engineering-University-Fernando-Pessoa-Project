@@ -63,16 +63,12 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         courses.add(new Course("Bases de dados"));
 
         this.courseRepo.saveAll(courses);
+        Set<Language> languages = new HashSet<>();
 
-        Language language1 = Language.Portuguese;
-        Language language2 = Language.French;
-        Language language3 = Language.Italian;
-        Language language4 = Language.Spanish;
-
-        Explainer explainer1 = new Explainer("Alexandro", language1);
-        Explainer explainer2 = new Explainer("Feliz", language2);
-        Explainer explainer3 = new Explainer("Borges Gouveia", language3);
-        Explainer explainer4 = new Explainer("André", language4);
+        Explainer explainer1 = new Explainer("Alexandro", "English");
+        Explainer explainer2 = new Explainer("Feliz", "Italian");
+        Explainer explainer3 = new Explainer("Borges Gouveia", "Spanish");
+        Explainer explainer4 = new Explainer("André", "French");
 
         Set<Explainer> explainers = new HashSet<>();
         explainers.add(explainer1);
@@ -90,8 +86,8 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         DayOfWeek dayOfWeek0 = DayOfWeek.MONDAY;
         DayOfWeek dayOfWeek1 = DayOfWeek.FRIDAY;
 
-        LocalDateTime start = LocalDateTime.of(20, Month.DECEMBER, 2, 15, 30);
-        LocalDateTime end = LocalDateTime.of(20, Month.DECEMBER, 2, 16, 0);
+        LocalDateTime start = LocalDateTime.of(2020, Month.DECEMBER, 2, 15, 30);
+        LocalDateTime end = LocalDateTime.of(2020, Month.DECEMBER, 2, 16, 0);
         LocalDateTime starts = LocalDateTime.of(2020, Month.JANUARY, 16, 9, 0);
         LocalDateTime ends = LocalDateTime.of(2020, Month.JANUARY, 16, 9, 30);
 
@@ -112,6 +108,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         Appointment appointment1 = new Appointment(start, end);
         appointment1.setExplainer(explainer1);
         appointments1.add(appointment1);
+
         Set<Appointment> appointments2 = new HashSet<>();
         Appointment appointment2 = new Appointment(starts, ends);
         appointment2.setExplainer(explainer2);

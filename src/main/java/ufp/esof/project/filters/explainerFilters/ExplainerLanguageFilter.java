@@ -20,7 +20,7 @@ public class ExplainerLanguageFilter implements ExplainerFilter {
         if (languages == null) return explainers;
 
 
-        return explainers.stream().filter(explainer -> explainer.getLanguages()==this.languages).collect(Collectors.toSet());
+        return explainers.stream().filter(explainer -> explainer.getLanguage()==this.languages).collect(Collectors.toSet());
 
 
     }
