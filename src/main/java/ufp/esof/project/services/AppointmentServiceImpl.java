@@ -18,13 +18,13 @@ import java.util.Set;
 @Component
 public class AppointmentServiceImpl implements AppointmentService {
 
-    private AppointmentRepo appointmentRepo;
+    private final AppointmentRepo appointmentRepo;
 
-    private ExplainerRepo explainerRepo;
+    private final ExplainerRepo explainerRepo;
 
-    private StudentRepo studentRepo;
+    private final StudentRepo studentRepo;
 
-    private AvailabilityRepo availabilityRepo;
+    private final AvailabilityRepo availabilityRepo;
 
     @Autowired
     public AppointmentServiceImpl(AppointmentRepo appointmentRepo, ExplainerRepo explainerRepo, StudentRepo studentRepo, AvailabilityRepo availabilityRepo) {

@@ -4,8 +4,8 @@ package ufp.esof.project.filters;
 import java.util.Set;
 
 public class AndFilter<T> implements FilterI<T> {
-    private FilterI<T> filter;
-    private FilterI<T> otherFilter;
+    private final FilterI<T> filter;
+    private final FilterI<T> otherFilter;
 
     public AndFilter(FilterI<T> filter, FilterI<T> otherFilter) {
         this.filter = filter;

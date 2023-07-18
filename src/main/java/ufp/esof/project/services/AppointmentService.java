@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ufp.esof.project.models.Appointment;
-import ufp.esof.project.models.Availability;
 import ufp.esof.project.models.Explainer;
 import ufp.esof.project.models.Student;
 

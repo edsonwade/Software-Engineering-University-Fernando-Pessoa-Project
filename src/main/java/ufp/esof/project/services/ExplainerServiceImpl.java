@@ -16,11 +16,11 @@ import java.util.Set;
 @Component
 public class ExplainerServiceImpl implements ExplainerService {
 
-    private ExplainerFilterService explainerFilterService;
+    private final ExplainerFilterService explainerFilterService;
 
-    private ExplainerRepo explainerRepo;
+    private final ExplainerRepo explainerRepo;
 
-    private CourseRepo courseRepo;
+    private final CourseRepo courseRepo;
 
     public ExplainerServiceImpl(ExplainerFilterService explainerFilterService, ExplainerRepo explainerRepo, CourseRepo courseRepo) {
         this.explainerRepo = explainerRepo;
@@ -35,7 +35,6 @@ public class ExplainerServiceImpl implements ExplainerService {
     public Set<Explainer> getFilteredExplainer(FilterObject filterObject) {
         return explainerFilterService.filterExplainer(findAllExplainers(), filterObject);
 
-        // courseFilterService.filterCourses(getAllCourses(), filterObject);
     }
 
     public Optional<Explainer> findExplainerByName(String name) {

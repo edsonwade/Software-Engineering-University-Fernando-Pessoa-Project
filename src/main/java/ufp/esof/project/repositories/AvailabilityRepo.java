@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface AvailabilityRepo extends CrudRepository<Availability, Long> {
     Optional<Availability> findById(Long id);
 
-    Iterable<Availability> findByExplainer(Explainer explainer);
 }

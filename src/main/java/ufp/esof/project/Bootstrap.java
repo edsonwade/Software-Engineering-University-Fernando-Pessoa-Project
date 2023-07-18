@@ -22,15 +22,15 @@ import java.util.Set;
 @Transactional
 public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private ExplainerRepo explainerRepo;
-    private CourseRepo courseRepo;
-    private AppointmentRepo appointmentRepo;
-    private StudentRepo studentRepo;
-    private CollegeRepo collegeRepo;
-    private DegreeRepo degreeRepo;
-    private AvailabilityRepo availabilityRepo;
+    private final ExplainerRepo explainerRepo;
+    private final CourseRepo courseRepo;
+    private final AppointmentRepo appointmentRepo;
+    private final StudentRepo studentRepo;
+    private final CollegeRepo collegeRepo;
+    private final DegreeRepo degreeRepo;
+    private final AvailabilityRepo availabilityRepo;
 
     @Autowired
     public Bootstrap(ExplainerRepo explainerRepo, CourseRepo courseRepo, AvailabilityRepo availabilityRepo, DegreeRepo degreeRepo, CollegeRepo collegeRepo, AppointmentRepo appointmentRepo, StudentRepo studentRepo) {
@@ -63,7 +63,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
         courses.add(new Course("Bases de dados"));
 
         this.courseRepo.saveAll(courses);
-        Set<Language> languages = new HashSet<>();
+
 
         Explainer explainer1 = new Explainer("Alexandro", "English");
         Explainer explainer2 = new Explainer("Feliz", "Italian");

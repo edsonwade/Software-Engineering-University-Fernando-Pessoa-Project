@@ -13,7 +13,4 @@ public interface AvailabilityServiceI {
 
     boolean deleteById(Long id);
 
-    Optional<Availability> createAvailability(Availability availability);
-
-    Optional<Availability> editAvailability(Availability currentAvailability, Availability availability, Long id);
 }

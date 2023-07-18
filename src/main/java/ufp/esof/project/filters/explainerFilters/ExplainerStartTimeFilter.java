@@ -8,11 +8,12 @@ import ufp.esof.project.models.Explainer;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ExplainerStartTimeFilter implements ExplainerFilter {
 
 
-    private LocalTime startTime;
+    private final LocalTime startTime;
 
     public ExplainerStartTimeFilter(LocalTime startTime) {
         this.startTime = startTime;
@@ -22,18 +23,9 @@ public class ExplainerStartTimeFilter implements ExplainerFilter {
 
     public Set<Explainer> filter(Set<Explainer> explainers) {
         if (startTime == null) return explainers;
-        Set<Explainer> hourStartFilter = new HashSet<>();
-        for (Explainer explainer : explainers) {
-            for (Appointment appointment : explainer.getAppointments()) {
-                if (appointment.getStartTime().getHour() <= startTime.getHour()) {
-                    hourStartFilter.add(explainer);
-                    break;
-
-                }
-
-            }
-        }
-        return hourStartFilter;
+        return explainers.stream().filter(explainer -> explainer.getAppointments()
+                .stream().anyMatch(appointment -> appointment.getStartTime().getHour() <= startTime.getHour()))
+                .collect(Collectors.toSet());
 
     }
 }
