@@ -18,17 +18,16 @@ public interface AppointmentService {
     Set<Appointment> getSetAppointment();
 
 
-    Iterable<Appointment> findAll();
+    Iterable<Appointment> findAllAppointments();
 
-    Optional<Appointment> findById(Long id);
+    Optional<Appointment> findAppointmentById(Long id);
 
-    Optional<Explainer> findByName(String nameExplainer);
+    Optional<Explainer> findByExplainerByName(String nameExplainer);
 
     Optional<Student> findStudentById(Long id);
 
-    Appointment save(Appointment Appointment);
+    Appointment createAppointment(Appointment appointment);
 
-    ResponseEntity<Appointment> saveAppointment(Appointment Appointment);
 
     boolean deleteById(Long id);
 
