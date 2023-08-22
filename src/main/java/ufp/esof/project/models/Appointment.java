@@ -45,6 +45,13 @@ public class Appointment {
         this.expectedEndTime = end;
     }
 
+    public Appointment(Long id, Student student, Explainer explainer, LocalDateTime startTime, LocalDateTime expectedEndTime) {
+        this.id = id;
+        this.student = student;
+        this.explainer = explainer;
+        this.startTime = startTime;
+        this.expectedEndTime = expectedEndTime;
+    }
 
     public Appointment(Long id) {
         this.setId(id);
