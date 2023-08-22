@@ -73,7 +73,7 @@ class AppointmentServiceImplTest {
         assertFalse(appointmentById.isPresent());
         assertDoesNotThrow(() -> currentInstance.findAppointmentById(1L));
 
-        verify(appointmentRepo,times(2)).findById((Long)any());
+        verify(appointmentRepo,times(2)).findById(any());
 
     }
 
@@ -82,7 +82,7 @@ class AppointmentServiceImplTest {
     void testFindAppointementByIdAndThrowsAnException() {
         when(Optional.of(appointmentRepo.findById((Long) anyLong()))).thenThrow(new ObjectNotFoundById(" the given id was not found"));
         assertThrows(ObjectNotFoundById.class, () -> currentInstance.findAppointmentById(1L));
-        verify(this.appointmentRepo).findById((Long) any());
+        verify(this.appointmentRepo).findById( any());
 
     }
 
