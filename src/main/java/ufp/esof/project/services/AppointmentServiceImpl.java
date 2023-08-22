@@ -3,11 +3,8 @@ package ufp.esof.project.services;
 import org.springframework.stereotype.Component;
 import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.models.Appointment;
-import ufp.esof.project.models.Explainer;
-import ufp.esof.project.models.Student;
 import ufp.esof.project.repositories.AppointmentRepo;
-import ufp.esof.project.repositories.ExplainerRepo;
-import ufp.esof.project.repositories.StudentRepo;
+
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -20,19 +17,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepo appointmentRepo;
 
-    private final ExplainerRepo explainerRepo;
 
-    private final StudentRepo studentRepo;
-
-
-
-    public AppointmentServiceImpl(AppointmentRepo appointmentRepo, ExplainerRepo explainerRepo, StudentRepo studentRepo) {
+    public AppointmentServiceImpl(AppointmentRepo appointmentRepo) {
         this.appointmentRepo = appointmentRepo;
-        this.explainerRepo = explainerRepo;
-        this.studentRepo = studentRepo;
-
     }
-
 
     @Override
     public Set<Appointment> getSetAppointment() {
@@ -54,18 +42,6 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(() -> new ObjectNotFoundById( "Appointment with " + id + NOT_FOUND));
     }
 
-    @Override
-    public Optional<Explainer> findByExplainerByName(String nameExplainer) {
-        return Optional.of(explainerRepo.findByName(nameExplainer))
-                .orElseThrow(() -> new ObjectNotFoundById("Explainer with name " + nameExplainer + NOT_FOUND));
-    }
-
-    @Override
-    public Optional<Student> findStudentById(Long id) {
-        return Optional.of(studentRepo.findById(id))
-                .orElseThrow(() -> new ObjectNotFoundById(" Student with " + id + NOT_FOUND));
-
-    }
 
     @Override
     public Appointment createAppointment(Appointment appointment) {

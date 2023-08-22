@@ -2,6 +2,7 @@ package ufp.esof.project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.models.Appointment;
 import ufp.esof.project.models.Student;
 import ufp.esof.project.repositories.AppointmentRepo;
@@ -14,9 +15,9 @@ import java.util.Set;
 @Service
 public class StudentService {
 
-    private StudentRepo studentRepo;
+    private final StudentRepo studentRepo;
 
-    private AppointmentRepo appointmentRepo;
+    private final AppointmentRepo appointmentRepo;
 
     @Autowired
     public StudentService(StudentRepo studentRepo, AppointmentRepo appointmentRepo) {
@@ -29,7 +30,8 @@ public class StudentService {
     }
 
     public Optional<Student> findById(Long id) {
-        return this.studentRepo.findById(id);
+       return Optional.of(studentRepo.findById(1L))
+               .orElseThrow(()-> new ObjectNotFoundById("Student with " + id + " not found"));
     }
 
     public boolean deleteById(Long id) {
