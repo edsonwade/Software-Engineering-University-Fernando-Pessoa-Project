@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,9 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Student {
+public class Student implements Serializable {
+
+    private static final long serialVersionUID = -1619636317041134369L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +30,4 @@ public class Student {
         this.setName(name);
     }
 
-    public void addAppointment(Appointment appointment) {
-        this.appointments.add(appointment);
-        appointment.setStudent(this);
-    }
 }
