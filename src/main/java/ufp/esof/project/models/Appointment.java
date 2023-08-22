@@ -8,15 +8,16 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
-public class Appointment {
+public class Appointment implements Serializable {
+    private static final long serialVersionUID = 7346185811908698013L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
