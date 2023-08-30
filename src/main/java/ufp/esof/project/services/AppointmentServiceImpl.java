@@ -2,9 +2,8 @@ package ufp.esof.project.services;
 
 import org.springframework.stereotype.Component;
 import ufp.esof.project.exception.ObjectNotFoundById;
-import ufp.esof.project.models.Appointment;
-import ufp.esof.project.repositories.AppointmentRepo;
-
+import ufp.esof.project.persistence.model.Appointment;
+import ufp.esof.project.persistence.repositories.AppointmentRepo;
 
 import java.util.HashSet;
 import java.util.Optional;

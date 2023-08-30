@@ -1,7 +1,8 @@
 package ufp.esof.project.filters.explainerFilters;
 
-import ufp.esof.project.models.Explainer;
-import ufp.esof.project.models.Language;
+
+import ufp.esof.project.persistence.model.Explainer;
+import ufp.esof.project.persistence.model.Language;
 
 import java.util.Set;
 import java.util.stream.Collectors;

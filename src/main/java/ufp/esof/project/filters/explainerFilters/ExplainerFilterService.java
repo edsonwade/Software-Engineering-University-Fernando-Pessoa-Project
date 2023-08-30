@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ufp.esof.project.filters.AndFilter;
 import ufp.esof.project.filters.FilterI;
 import ufp.esof.project.filters.FilterObject;
-import ufp.esof.project.models.Explainer;
+import ufp.esof.project.persistence.model.Explainer;
 
 import java.util.Set;
 

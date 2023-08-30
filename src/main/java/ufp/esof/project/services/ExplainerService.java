@@ -2,7 +2,7 @@ package ufp.esof.project.services;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.Explainer;
+import ufp.esof.project.persistence.model.Explainer;
 
 import java.util.Optional;
 

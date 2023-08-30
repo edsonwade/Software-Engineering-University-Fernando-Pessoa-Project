@@ -1,6 +1,7 @@
 package ufp.esof.project.filters.explainerFilters;
 
-import ufp.esof.project.models.Explainer;
+
+import ufp.esof.project.persistence.model.Explainer;
 
 import java.time.LocalTime;
 import java.util.Set;

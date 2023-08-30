@@ -1,8 +1,8 @@
-package ufp.esof.project.repositories;
+package ufp.esof.project.persistence.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ufp.esof.project.models.College;
+import ufp.esof.project.persistence.model.College;
 
 import java.util.Optional;
 

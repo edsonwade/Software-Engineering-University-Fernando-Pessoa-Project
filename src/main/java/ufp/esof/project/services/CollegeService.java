@@ -1,11 +1,10 @@
 package ufp.esof.project.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.College;
-import ufp.esof.project.models.Degree;
-import ufp.esof.project.repositories.CollegeRepo;
-import ufp.esof.project.repositories.DegreeRepo;
+import ufp.esof.project.persistence.model.College;
+import ufp.esof.project.persistence.model.Degree;
+import ufp.esof.project.persistence.repositories.CollegeRepo;
+import ufp.esof.project.persistence.repositories.DegreeRepo;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -14,11 +13,11 @@ import java.util.Set;
 @Service
 public class CollegeService {
 
-    private CollegeRepo collegeRepo;
+    private final CollegeRepo collegeRepo;
 
-    private DegreeRepo degreeRepo;
+    private final DegreeRepo degreeRepo;
 
-    @Autowired
+
     public CollegeService(CollegeRepo collegeRepo, DegreeRepo degreeRepo) {
         this.collegeRepo = collegeRepo;
         this.degreeRepo = degreeRepo;
@@ -72,7 +71,7 @@ public class CollegeService {
             newCollege = optionalCollege.get();
 
         optionalCollege = this.collegeRepo.findByName(college.getName());
-        if (optionalCollege.isPresent() && (!optionalCollege.get().getId().equals(id)))
+        if (optionalCollege.isPresent() && (!optionalCollege.get().getCollegeId().equals(id)))
             return Optional.empty();
 
         newCollege.setName(college.getName());
@@ -83,7 +82,7 @@ public class CollegeService {
     public Optional<College> validateDegrees(College currentCollege, College college) {
         Set<Degree> newDegrees = new HashSet<>();
         for (Degree degree : college.getDegrees()) {
-            Optional<Degree> optionalDegree = this.degreeRepo.findByName(degree.getName());
+            Optional<Degree> optionalDegree = this.degreeRepo.findByDegreeName(degree.getDegreeName());
             if (optionalDegree.isEmpty())
                 return Optional.empty();
             Degree foundDegree = optionalDegree.get();

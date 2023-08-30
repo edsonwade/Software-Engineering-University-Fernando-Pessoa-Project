@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ufp.esof.project.exception.ObjectNotFoundById;
-import ufp.esof.project.models.Appointment;
-import ufp.esof.project.models.Explainer;
-import ufp.esof.project.models.Student;
-import ufp.esof.project.repositories.AppointmentRepo;
+import ufp.esof.project.persistence.model.Appointment;
+import ufp.esof.project.persistence.model.Explainer;
+import ufp.esof.project.persistence.model.Student;
+import ufp.esof.project.persistence.repositories.AppointmentRepo;
 
 import java.time.LocalDateTime;
 import java.util.*;

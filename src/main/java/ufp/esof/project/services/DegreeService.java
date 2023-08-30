@@ -1,12 +1,11 @@
 package ufp.esof.project.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.College;
-import ufp.esof.project.models.Course;
-import ufp.esof.project.models.Degree;
-import ufp.esof.project.repositories.CourseRepo;
-import ufp.esof.project.repositories.DegreeRepo;
+import ufp.esof.project.persistence.model.College;
+import ufp.esof.project.persistence.model.Course;
+import ufp.esof.project.persistence.model.Degree;
+import ufp.esof.project.persistence.repositories.CourseRepo;
+import ufp.esof.project.persistence.repositories.DegreeRepo;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -15,11 +14,11 @@ import java.util.Set;
 @Service
 public class DegreeService {
 
-    private DegreeRepo degreeRepo;
-    private CourseRepo courseRepo;
-    private CollegeService collegeService;
+    private final DegreeRepo degreeRepo;
+    private final CourseRepo courseRepo;
+    private final CollegeService collegeService;
 
-    @Autowired
+
     public DegreeService(DegreeRepo degreeRepo, CollegeService collegeService, CourseRepo courseRepo) {
         this.degreeRepo = degreeRepo;
         this.collegeService = collegeService;
@@ -31,7 +30,7 @@ public class DegreeService {
     }
 
     public Optional<Degree> findByName(String name) {
-        return this.degreeRepo.findByName(name);
+        return this.degreeRepo.findByDegreeName(name);
     }
 
     public Iterable<Degree> findAllDegrees() {
@@ -49,7 +48,7 @@ public class DegreeService {
 
     public Optional<Degree> createDegree(Degree degree) {
         Degree newDegree = new Degree();
-        Optional<Degree> degreeOptional = this.findByName(degree.getName());
+        Optional<Degree> degreeOptional = this.findByName(degree.getDegreeName());
         if (degreeOptional.isPresent())
             return Optional.empty();
 
@@ -72,11 +71,11 @@ public class DegreeService {
         if (optionalDegree.isPresent())
             newDegree = optionalDegree.get();
 
-        optionalDegree = this.degreeRepo.findByName(degree.getName());
-        if (optionalDegree.isPresent() && (!optionalDegree.get().getId().equals(id)))
+        optionalDegree = this.degreeRepo.findByDegreeName(degree.getDegreeName());
+        if (optionalDegree.isPresent() && (!optionalDegree.get().getDegreeId().equals(id)))
             return Optional.empty();
 
-        newDegree.setName(degree.getName());
+        newDegree.setDegreeName(degree.getDegreeName());
 
         Optional<College> optionalCollege = this.collegeService.findByName(degree.getCollege().getName());
         if (optionalCollege.isEmpty())
@@ -90,7 +89,7 @@ public class DegreeService {
     public Optional<Degree> validateDegreeCourses(Degree currentDegree, Degree degree) {
         Set<Course> newCourses = new HashSet<>();
         for (Course course : degree.getCourses()) {
-            Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+            Optional<Course> optionalCourse = this.courseRepo.findByCourseName(course.getCourseName());
             if (optionalCourse.isEmpty()) {
                 return Optional.empty();
             }

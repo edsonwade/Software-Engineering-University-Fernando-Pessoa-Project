@@ -3,10 +3,10 @@ package ufp.esof.project.services;
 import org.springframework.stereotype.Component;
 import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.exception.ObjectNotFoundByName;
-import ufp.esof.project.models.Course;
-import ufp.esof.project.models.Explainer;
-import ufp.esof.project.repositories.CourseRepo;
-import ufp.esof.project.repositories.ExplainerRepo;
+import ufp.esof.project.persistence.model.Course;
+import ufp.esof.project.persistence.model.Explainer;
+import ufp.esof.project.persistence.repositories.CourseRepo;
+import ufp.esof.project.persistence.repositories.ExplainerRepo;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class ExplainerServiceImpl implements ExplainerService {
     }
 
     public Optional<Explainer> findExplainerByName(String name) {
-        return Optional.of(explainerRepo.findByName(name))
+        return Optional.of(explainerRepo.findByExplainerName(name))
                 .orElseThrow(()->new ObjectNotFoundByName(" Explainer with " + name + " not found"));
     }
 
@@ -70,11 +70,11 @@ public class ExplainerServiceImpl implements ExplainerService {
         if (optionalExplainer.isPresent())
             newExplainer = optionalExplainer.get();
 
-        optionalExplainer = this.explainerRepo.findByName(explainer.getName());
-        if (optionalExplainer.isPresent() && (!optionalExplainer.get().getId().equals(id)))
+        optionalExplainer = this.explainerRepo.findByExplainerName(explainer.getExplainerName());
+        if (optionalExplainer.isPresent() && (!optionalExplainer.get().getExplainerId().equals(id)))
             return Optional.empty();
 
-        newExplainer.setName(explainer.getName());
+        newExplainer.setExplainerName(explainer.getExplainerName());
 
         return Optional.of(this.explainerRepo.save(newExplainer));
     }
@@ -91,7 +91,7 @@ public class ExplainerServiceImpl implements ExplainerService {
     public Optional<Explainer> validateExplainerCourses(Explainer currentExplainer, Explainer explainer) {
         Set<Course> newCourses = new HashSet<>();
         for (Course course : explainer.getCourses()) {
-            Optional<Course> optionalCourse = this.courseRepo.findByName(course.getName());
+            Optional<Course> optionalCourse = this.courseRepo.findByCourseName(course.getCourseName());
             if (optionalCourse.isEmpty())
                 return Optional.empty();
             Course foundCourse = optionalCourse.get();

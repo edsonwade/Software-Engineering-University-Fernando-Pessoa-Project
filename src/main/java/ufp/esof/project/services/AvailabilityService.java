@@ -1,22 +1,21 @@
 package ufp.esof.project.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.Availability;
-import ufp.esof.project.models.Explainer;
-import ufp.esof.project.repositories.AvailabilityRepo;
-import ufp.esof.project.repositories.ExplainerRepo;
+import ufp.esof.project.persistence.model.Availability;
+import ufp.esof.project.persistence.model.Explainer;
+import ufp.esof.project.persistence.repositories.AvailabilityRepo;
+import ufp.esof.project.persistence.repositories.ExplainerRepo;
 
 import java.util.Optional;
 
 @Service
 public class AvailabilityService {
 
-    private AvailabilityRepo availabilityRepo;
+    private final AvailabilityRepo availabilityRepo;
 
-    private ExplainerRepo explainerRepo;
+    private final ExplainerRepo explainerRepo;
 
-    @Autowired
+
     public AvailabilityService(AvailabilityRepo availabilityRepo, ExplainerRepo explainerRepo) {
         this.availabilityRepo = availabilityRepo;
         this.explainerRepo = explainerRepo;
@@ -42,7 +41,10 @@ public class AvailabilityService {
     public Optional<Availability> createAvailability(Availability availability) {
         Availability newAvailability = new Availability();
 
-        Optional<Explainer> optionalExplainer = this.explainerRepo.findByName(availability.getExplainer().getName());
+        Optional<Explainer> optionalExplainer = this.explainerRepo
+                .findByExplainerName(availability
+                        .getExplainer()
+                        .getExplainerName());
         if (optionalExplainer.isEmpty())
             return Optional.empty();
 
@@ -56,7 +58,7 @@ public class AvailabilityService {
 
         return Optional.of(this.availabilityRepo.save(newAvailability));
     }
-
+@SuppressWarnings("unused")
     public Optional<Availability> editAvailability(Availability currentAvailability, Availability availability, Long id) {
         Availability newAvailability;
 
@@ -66,7 +68,10 @@ public class AvailabilityService {
 
         newAvailability = optionalAvailability.get();
 
-        Optional<Explainer> optionalExplainer = this.explainerRepo.findByName(availability.getExplainer().getName());
+        Optional<Explainer> optionalExplainer = this.explainerRepo
+                .findByExplainerName(availability
+                        .getExplainer()
+                        .getExplainerName());
         if (optionalExplainer.isEmpty())
             return Optional.empty();
 

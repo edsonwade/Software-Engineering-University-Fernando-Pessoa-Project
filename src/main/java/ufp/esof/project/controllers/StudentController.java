@@ -1,23 +1,20 @@
 package ufp.esof.project.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.Student;
+import ufp.esof.project.persistence.model.Student;
 import ufp.esof.project.services.StudentService;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/student")
+@RestController
+@RequestMapping("/api/student")
 public class StudentController {
 
-    private StudentService studentService;
+    private final  StudentService studentService;
 
-    @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -51,7 +48,7 @@ public class StudentController {
         Optional<Student> optionalStudent = this.studentService.createStudent(student);
         if (optionalStudent.isPresent())
             return ResponseEntity.ok(optionalStudent.get());
-        throw new StudentNotCreatedException(student.getName());
+        throw new StudentNotCreatedException(student.getStudentName());
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
