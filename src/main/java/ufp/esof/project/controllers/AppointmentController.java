@@ -3,7 +3,7 @@ package ufp.esof.project.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.Appointment;
+import ufp.esof.project.persistence.model.Appointment;
 import ufp.esof.project.services.AppointmentServiceImpl;
 
 import java.util.Optional;

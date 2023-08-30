@@ -2,7 +2,7 @@ package ufp.esof.project.filters.explainerFilters;
 
 
 import ufp.esof.project.filters.FilterI;
-import ufp.esof.project.models.Explainer;
+import ufp.esof.project.persistence.model.Explainer;
 
 import java.util.Set;
 

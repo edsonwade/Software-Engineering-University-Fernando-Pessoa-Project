@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.Course;
+import ufp.esof.project.persistence.model.Course;
 import ufp.esof.project.services.CourseService;
 
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/course")
 public class CourseController {
 
@@ -40,7 +39,7 @@ public class CourseController {
         boolean res = this.courseService.deleteById(id);
         Optional<Course> optionalCourse = this.courseService.findById(id);
         if (optionalCourse.isPresent())
-            throw new CourseNotDeletedException(optionalCourse.get().getName());
+            throw new CourseNotDeletedException(optionalCourse.get().getCourseName());
 
         if (res)
             return ResponseEntity.ok("Course deleted successfully!");
@@ -53,7 +52,7 @@ public class CourseController {
         Optional<Course> optionalCourse = this.courseService.createCourse(course);
         if (optionalCourse.isPresent())
             return ResponseEntity.ok(optionalCourse.get());
-        throw new CourseNotCreatedException(course.getName());
+        throw new CourseNotCreatedException(course.getCourseName());
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

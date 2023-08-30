@@ -1,25 +1,21 @@
 package ufp.esof.project.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.College;
+import ufp.esof.project.persistence.model.College;
 import ufp.esof.project.services.CollegeService;
 
 import java.util.Optional;
 
 
-@Controller
 @RestController
 @RequestMapping("/college")
 public class CollegeController {
 
-    private CollegeService collegeService;
+    private final CollegeService collegeService;
 
-    @Autowired
     public CollegeController(CollegeService collegeService) {
         this.collegeService = collegeService;
     }

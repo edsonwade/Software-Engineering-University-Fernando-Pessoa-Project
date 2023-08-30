@@ -1,7 +1,7 @@
 package ufp.esof.project.services;
 
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.Availability;
+import ufp.esof.project.persistence.model.Availability;
 
 import java.util.Optional;
 

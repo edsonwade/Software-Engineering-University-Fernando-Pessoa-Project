@@ -1,23 +1,20 @@
 package ufp.esof.project.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.Degree;
+import ufp.esof.project.persistence.model.Degree;
 import ufp.esof.project.services.DegreeService;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/degree")
+@RestController
+@RequestMapping("/api/degree")
 public class DegreeController {
 
-    private DegreeService degreeService;
+    private final DegreeService degreeService;
 
-    @Autowired
     public DegreeController(DegreeService degreeService) {
         this.degreeService = degreeService;
     }
@@ -40,7 +37,7 @@ public class DegreeController {
         Optional<Degree> degreeOptional = this.degreeService.createDegree(degree);
         if (degreeOptional.isPresent())
             return ResponseEntity.ok(degreeOptional.get());
-        throw new DegreeNotCreatedException(degree.getName());
+        throw new DegreeNotCreatedException(degree.getDegreeName());
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +58,7 @@ public class DegreeController {
         boolean res = this.degreeService.deleteById(id);
         Optional<Degree> degreeOptional = this.degreeService.findById(id);
         if (degreeOptional.isPresent())
-            throw new DegreeNotDeletedException(degreeOptional.get().getName());
+            throw new DegreeNotDeletedException(degreeOptional.get().getDegreeName());
 
         if (res)
             return ResponseEntity.ok("Degree deleted successfully!");

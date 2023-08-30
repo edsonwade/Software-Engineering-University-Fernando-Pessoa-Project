@@ -1,23 +1,20 @@
 package ufp.esof.project.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ufp.esof.project.models.Availability;
+import ufp.esof.project.persistence.model.Availability;
 import ufp.esof.project.services.AvailabilityService;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/availability")
+@RestController
+@RequestMapping("/api/availability")
 public class AvailabilityController {
 
-    private AvailabilityService availabilityService;
+    private final AvailabilityService availabilityService;
 
-    @Autowired
     public AvailabilityController(AvailabilityService availabilityService) {
         this.availabilityService = availabilityService;
     }
@@ -52,7 +49,7 @@ public class AvailabilityController {
         Optional<Availability> optionalAvailability = this.availabilityService.createAvailability(availability);
         if (optionalAvailability.isPresent())
             return ResponseEntity.ok(optionalAvailability.get());
-        throw new AvailabilityNotCreatedException(availability.getId());
+        throw new AvailabilityNotCreatedException(availability.getAvailabilityId());
     }
 
     @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

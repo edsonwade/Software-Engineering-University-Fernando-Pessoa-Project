@@ -1,8 +1,7 @@
 package ufp.esof.project.services;
 
 import org.springframework.stereotype.Service;
-import ufp.esof.project.models.Appointment;
-
+import ufp.esof.project.persistence.model.Appointment;
 
 import java.util.Optional;
 import java.util.Set;

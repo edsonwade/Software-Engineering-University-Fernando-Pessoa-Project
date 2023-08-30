@@ -1,12 +1,11 @@
 package ufp.esof.project.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ufp.esof.project.exception.ObjectNotFoundById;
-import ufp.esof.project.models.Appointment;
-import ufp.esof.project.models.Student;
-import ufp.esof.project.repositories.AppointmentRepo;
-import ufp.esof.project.repositories.StudentRepo;
+import ufp.esof.project.persistence.model.Appointment;
+import ufp.esof.project.persistence.model.Student;
+import ufp.esof.project.persistence.repositories.AppointmentRepo;
+import ufp.esof.project.persistence.repositories.StudentRepo;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -19,7 +18,6 @@ public class StudentService {
 
     private final AppointmentRepo appointmentRepo;
 
-    @Autowired
     public StudentService(StudentRepo studentRepo, AppointmentRepo appointmentRepo) {
         this.studentRepo = studentRepo;
         this.appointmentRepo = appointmentRepo;
@@ -52,7 +50,7 @@ public class StudentService {
         if (optionalStudent.isPresent())
             newStudent = optionalStudent.get();
 
-        optionalStudent = this.studentRepo.findByName(student.getName());
+        optionalStudent = this.studentRepo.findByStudentName(student.getStudentName());
         if (optionalStudent.isPresent())
             return Optional.empty();
 
@@ -65,11 +63,11 @@ public class StudentService {
         if (optionalStudent.isPresent())
             newStudent = optionalStudent.get();
 
-        optionalStudent = this.studentRepo.findByName(student.getName());
-        if (optionalStudent.isPresent() && (!optionalStudent.get().getId().equals(id)))
+        optionalStudent = this.studentRepo.findByStudentName(student.getStudentName());
+        if (optionalStudent.isPresent() && (!optionalStudent.get().getStudentId().equals(id)))
             return Optional.empty();
 
-        newStudent.setName(student.getName());
+        newStudent.setStudentName(student.getStudentName());
 
         return Optional.of(this.studentRepo.save(newStudent));
     }
@@ -77,7 +75,7 @@ public class StudentService {
     public Optional<Student> validateAppointments(Student currentStudent, Student student) {
         Set<Appointment> newAppointments = new HashSet<>();
         for (Appointment appointment : student.getAppointments()) {
-            Optional<Appointment> optionalAppointment = this.appointmentRepo.findById(appointment.getId());
+            Optional<Appointment> optionalAppointment = this.appointmentRepo.findById(appointment.getAppointmentId());
             if (optionalAppointment.isEmpty())
                 return Optional.empty();
             Appointment foundAppointment = optionalAppointment.get();
