@@ -102,10 +102,10 @@ class AppointmentServiceImplTest {
     @DisplayName("given an specific id ,delete appointment and return true ")
     void testDeleteAppointmentByIdAndReturnTrue() {
 
-        given(appointmentRepo.findById(appointment.getId())).willReturn(Optional.of(appointment));
-        doNothing().when(appointmentRepo).deleteById(appointment.getId());
-        currentInstance.deleteById(appointment.getId());
-        verify(appointmentRepo,times(1)).deleteById(appointment.getId());
+        given(appointmentRepo.findById(appointment.getAppointmentId())).willReturn(Optional.of(appointment));
+        doNothing().when(appointmentRepo).deleteById(appointment.getAppointmentId());
+        currentInstance.deleteById(appointment.getAppointmentId());
+        verify(appointmentRepo,times(1)).deleteById(appointment.getAppointmentId());
 
     }
 
@@ -113,10 +113,10 @@ class AppointmentServiceImplTest {
     @DisplayName("given an specific id , return false , when the given id is not found")
     void testDeleteAppointmentByIdReturnFalseWhenTheIdIsNotFound() {
         Appointment appointments = new Appointment();
-        when(appointmentRepo.findById(appointments.getId())).thenReturn(Optional.empty());
-        doNothing().when(appointmentRepo).deleteById(appointments.getId());
-        currentInstance.deleteById(appointments.getId());
-        verify(appointmentRepo,times(0)).deleteById(appointments.getId());
+        when(appointmentRepo.findById(appointments.getAppointmentId())).thenReturn(Optional.empty());
+        doNothing().when(appointmentRepo).deleteById(appointments.getAppointmentId());
+        currentInstance.deleteById(appointments.getAppointmentId());
+        verify(appointmentRepo,times(0)).deleteById(appointments.getAppointmentId());
 
     }
 
