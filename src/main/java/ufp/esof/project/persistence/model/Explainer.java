@@ -28,13 +28,9 @@ public class Explainer implements Serializable {
     private Long explainerId;
     @Column(name = "explainer_name")
     private String explainerName;
-    @Column(unique = true, length = 40, nullable = false)
-    @Email(message = "Email is not valid",
-            regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @Column(unique = true, length = 40)
+    @Email(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
 
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<>();
@@ -73,11 +69,10 @@ public class Explainer implements Serializable {
         this.setCourses(courses);
     }
 
-    public Explainer(Long explainerId, String explainerName, String email, Gender gender, Set<Course> courses) {
+    public Explainer(Long explainerId, String explainerName, String email, Set<Course> courses) {
         this.explainerId = explainerId;
         this.explainerName = explainerName;
         this.email = email;
-        this.gender = gender;
         this.courses = courses;
     }
 
@@ -98,7 +93,6 @@ public class Explainer implements Serializable {
         if (!Objects.equals(explainerName, explainer.explainerName))
             return false;
         if (!Objects.equals(email, explainer.email)) return false;
-        if (gender != explainer.gender) return false;
         if (!Objects.equals(appointments, explainer.appointments))
             return false;
         if (!Objects.equals(courses, explainer.courses)) return false;
@@ -111,7 +105,6 @@ public class Explainer implements Serializable {
         int result = explainerId != null ? explainerId.hashCode() : 0;
         result = 31 * result + (explainerName != null ? explainerName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
         result = 31 * result + (appointments != null ? appointments.hashCode() : 0);
         result = 31 * result + (courses != null ? courses.hashCode() : 0);
         result = 31 * result + (language != null ? language.hashCode() : 0);
@@ -125,7 +118,6 @@ public class Explainer implements Serializable {
                 "explainerId=" + explainerId +
                 ", explainerName='" + explainerName + '\'' +
                 ", email='" + email + '\'' +
-                ", gender=" + gender +
                 ", appointments=" + appointments +
                 ", courses=" + courses +
                 ", language=" + language +
