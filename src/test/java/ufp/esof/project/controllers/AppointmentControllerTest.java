@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -98,5 +99,28 @@ class AppointmentControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    @DisplayName("DELETE /api/v1/appointment/delete/1 -true")
+    void testDeleteAppointmentByFound() throws Exception {
+        appointmentServiceMock.deleteById(anyLong());
+        // Execute the Get request
+        this.mockMvc
+                .perform(delete("/api/v1/appointment/delete/1"))
+                //Validate the response code
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.valueOf("text/plain;charset=UTF-8")));
+    }
+    @Test
+    @DisplayName("DELETE /api/v1/appointment/delete/1 - false")
+    void testDeleteAppointmentByIdNotFound() throws Exception {
+        when(appointmentServiceMock.deleteById(anyLong()))
+                .thenThrow(new ObjectNotFoundById(" the given id was not found"));
+
+        // Execute the Get request
+        this.mockMvc
+                .perform(delete("/api/v1/appointment/delete/1233"))
+                //Validate the response code
+                .andExpect(status().isNotFound());
+    }
 
 }
