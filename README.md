@@ -1,7 +1,19 @@
 # ESOF
+Code Review from the Subject Engineering Software project, realized in University Fernando Pessoa in 2019.
+
+### Update Project date
+-   06-09-2023
+
+### Table of Contents
+- [about](#about)
+- [Implementations](#implementations)
+- [Contributing](#contributing)
+
+## About
+Implementing the best practical of Clean Code, Design Pattern ,Solid Principal and Unit Testing .
 
 ## Objective (High Level)
-- Develop a web service that supports colledge tutoring of classes's content.
+- Develop a web service that supports college tutoring of class's content.
 
 ### Users
 - Students
@@ -63,3 +75,19 @@ Minimum Required Endpoints:
 - GET /explicador?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
 - GET /explicador/{universidade}?curso={curso}&dia={dia}&inicio={hora_inicio}&fim={hora_fim}
 - POST /atendimento/{universidade}
+
+## Implementations
+1. Maven v3.6.2
+2. JPA(Java Persistence API),Hibernate
+3. Flyway Migration (Mysql v8, H2, and MariaDB)
+4. Swagger (OpenAPI), Postman
+5. Docker Composer
+6. Integration Testing (JUnit5 and Mockito),Functional Test(Cucumber)
+7. Testcontainers(Docker Container)
+8. Pipeline CI/CD with Github Actions
+9. Grafana, Prometheus
+
+# Contributing
+- [Vanilson Muhongo](https://www.github.com/edsonwade)
+- [João Rodrigo Almeida Castro](https://github.com/31186)
+- [Fel Galvão](https://github.com/FelGalvao)
