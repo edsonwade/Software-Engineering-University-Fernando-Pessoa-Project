@@ -49,6 +49,14 @@ public class Availability implements Serializable {
         //default constructor
     }
 
+    public Availability(Long availabilityId, DayOfWeek dayOfWeek, LocalTime start, LocalTime end, Explainer explainer) {
+        this.availabilityId = availabilityId;
+        this.dayOfWeek = dayOfWeek;
+        this.start = start;
+        this.end = end;
+        this.explainer = explainer;
+    }
+
     public Availability(DayOfWeek dayOfWeek, LocalTime start, LocalTime end) {
         this.dayOfWeek = dayOfWeek;
         this.start = start;

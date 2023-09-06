@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/college")
+@RequestMapping("/api/v1/college")
 public class CollegeController {
 
     private final CollegeService collegeService;

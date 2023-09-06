@@ -10,7 +10,7 @@ import ufp.esof.project.services.DegreeService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/degree")
+@RequestMapping("/api/v1/degree")
 public class DegreeController {
 
     private final DegreeService degreeService;

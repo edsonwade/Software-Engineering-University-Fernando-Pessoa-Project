@@ -10,7 +10,7 @@ import ufp.esof.project.services.StudentService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/api/v1/student")
 public class StudentController {
 
     private final  StudentService studentService;

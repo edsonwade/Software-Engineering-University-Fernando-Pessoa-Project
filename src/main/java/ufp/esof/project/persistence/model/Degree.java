@@ -25,7 +25,8 @@ public class Degree implements Serializable {
     @Column(name = "degree_name")
     private String degreeName;
 
-    @OneToMany(mappedBy = "degree", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "degree", cascade = CascadeType.PERSIST)
+    @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
