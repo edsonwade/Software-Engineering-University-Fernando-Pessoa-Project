@@ -11,7 +11,7 @@ import ufp.esof.project.services.CourseService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/api/v1/course")
 public class CourseController {
 
     private CourseService courseService;

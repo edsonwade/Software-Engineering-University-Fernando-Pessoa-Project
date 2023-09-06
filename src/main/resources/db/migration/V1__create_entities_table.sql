@@ -95,11 +95,11 @@ alter table tb_appointments
 alter table tb_availabilitys
     add CONSTRAINT FK_TB_AVAILABILITYS_ON_EXPLAINER_EXPLAINER FOREIGN KEY (explainer_explainer_id) REFERENCES tb_explainers (explainer_id);
 
---alter table tb_courses
---    add CONSTRAINT FK_TB_COURSES_ON_DEGREE_DEGREE FOREIGN KEY (degree_degree_id) REFERENCES tb_degrees (degree_id);
---
---alter table tb_degrees
---    add CONSTRAINT FK_TB_DEGREES_ON_COLLEGE_COLLEGE FOREIGN KEY (college_college_id) REFERENCES tb_colleges (college_id);
+alter table tb_courses
+    add CONSTRAINT FK_TB_COURSES_ON_DEGREE_DEGREE FOREIGN KEY (degree_degree_id) REFERENCES tb_degrees (degree_id);
+
+alter table tb_degrees
+    add CONSTRAINT FK_TB_DEGREES_ON_COLLEGE_COLLEGE FOREIGN KEY (college_college_id) REFERENCES tb_colleges (college_id);
 
 alter table tb_languages
     add CONSTRAINT FK_TB_LANGUAGES_ON_EXPLAINER_EXPLAINER FOREIGN KEY (explainer_explainer_id) REFERENCES tb_explainers (explainer_id);

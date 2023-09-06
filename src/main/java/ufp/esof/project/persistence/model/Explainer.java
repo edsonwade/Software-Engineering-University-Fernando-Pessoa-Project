@@ -2,6 +2,7 @@ package ufp.esof.project.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,13 +32,14 @@ public class Explainer implements Serializable {
     @Column(unique = true, length = 40)
     @Email(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "explainer", cascade = CascadeType.ALL)
     private Set<Appointment> appointments = new HashSet<>();
 
 
     @JsonBackReference(value = "courses")
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private Set<Course> courses = new HashSet<>();
 
 

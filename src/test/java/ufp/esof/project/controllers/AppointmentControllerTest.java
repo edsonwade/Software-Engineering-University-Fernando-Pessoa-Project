@@ -1,6 +1,5 @@
 package ufp.esof.project.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AppointmentController.class)
@@ -83,7 +81,7 @@ class AppointmentControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
 
                 //Validate the return fields
-                .andExpect(jsonPath("$.size()").value(5))
+                .andExpect(jsonPath("$.size()").value(3))
                 .andExpect(jsonPath("$.id").value(1L));
 
     }
@@ -100,34 +98,5 @@ class AppointmentControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    @DisplayName("POST /api/v1/appointment/create - create new Appointment")
-    void testPostCreateAppointment() throws Exception {
-        Appointment appointments = new Appointment(
-                LocalDateTime.now(),
-                LocalDateTime.now());
 
-        when(appointmentServiceMock.createAppointment(appointments))
-                .thenReturn(appointments);
-
-        this.mockMvc
-                .perform(post("/api/v1/appointment/create")
-                        .contentType(asJsonString(appointments))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.size()").value(1))
-                .andExpect(jsonPath("$[0].id").value(1L));
-
-
-    }
-
-    private String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

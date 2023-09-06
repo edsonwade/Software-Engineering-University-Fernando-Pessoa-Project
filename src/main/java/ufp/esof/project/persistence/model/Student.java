@@ -1,5 +1,6 @@
 package ufp.esof.project.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class Student implements Serializable {
     @Email(message = "Email is not valid",
             regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 

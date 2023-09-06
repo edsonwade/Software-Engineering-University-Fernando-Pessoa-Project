@@ -49,16 +49,16 @@ insert into tb_availabilitys (availability_id, day_of_week, availability_start, 
 insert into tb_availabilitys (availability_id, day_of_week, availability_start, availability_end, explainer_explainer_id) values (9, 5, '2:35', '7:42', 6);
 insert into tb_availabilitys (availability_id, day_of_week, availability_start, availability_end, explainer_explainer_id) values (10, 2, '3:23', '11:12 ',1);
 
-insert into tb_colleges (college_id, name) values (308493, 'Universidade de Aveiro');
-insert into tb_colleges (college_id, name) values (44335, 'Universidade de Fernando Pessoa');
-insert into tb_colleges (college_id, name) values (116107, 'Universidade do Porto');
-insert into tb_colleges (college_id, name) values (558014, 'Universidade de Évora');
-insert into tb_colleges (college_id, name) values (39861, 'Universidade de Coimbra');
-insert into tb_colleges (college_id, name) values (193455, 'Universidade de Lisboa');
-insert into tb_colleges (college_id, name) values (628200, 'Universidade de Aveiro');
-insert into tb_colleges (college_id, name) values (201113, 'Universidade de Fundão');
-insert into tb_colleges (college_id, name) values (451959, 'Universidade de Coimbra');
-insert into tb_colleges (college_id, name) values (333964, 'Universidade de Braga');
+insert into tb_colleges (college_id, name) values (1, 'Universidade de Aveiro');
+insert into tb_colleges (college_id, name) values (2, 'Universidade de Fernando Pessoa');
+insert into tb_colleges (college_id, name) values (3, 'Universidade do Porto');
+insert into tb_colleges (college_id, name) values (4, 'Universidade de Évora');
+insert into tb_colleges (college_id, name) values (5, 'Universidade de Coimbra');
+insert into tb_colleges (college_id, name) values (6, 'Universidade de Lisboa');
+insert into tb_colleges (college_id, name) values (7, 'Universidade de Aveiro');
+insert into tb_colleges (college_id, name) values (8, 'Universidade de Fundão');
+insert into tb_colleges (college_id, name) values (9, 'Universidade de Coimbra');
+insert into tb_colleges (college_id, name) values (10, 'Universidade de Braga');
 
 insert into tb_languages (language_id, language_name, explainer_explainer_id) values (1, 'germany', 1);
 insert into tb_languages (language_id, language_name, explainer_explainer_id) values (2, 'french', 2);

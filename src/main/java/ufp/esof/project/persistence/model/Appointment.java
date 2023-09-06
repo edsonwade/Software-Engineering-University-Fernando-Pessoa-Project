@@ -1,5 +1,6 @@
 package ufp.esof.project.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -29,10 +30,12 @@ public class Appointment implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private Student student;
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @EqualsAndHashCode.Exclude
+    @JsonBackReference
     private Explainer explainer;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

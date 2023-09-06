@@ -10,7 +10,7 @@ import ufp.esof.project.services.AvailabilityService;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/availability")
+@RequestMapping("/api/v1/availability")
 public class AvailabilityController {
 
     private final AvailabilityService availabilityService;
