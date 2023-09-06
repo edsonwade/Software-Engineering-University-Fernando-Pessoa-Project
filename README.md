@@ -91,3 +91,7 @@ Minimum Required Endpoints:
 - [Vanilson Muhongo](https://www.github.com/edsonwade)
 - [João Rodrigo Almeida Castro](https://github.com/31186)
 - [Fel Galvão](https://github.com/FelGalvao)
+
+
+# Code Reviews 
+-[Codacy -white](https://app.codacy.com/gh/edsonwade/Software-Engineering-University-Fernando-Pessoa-Project/dashboard)
