@@ -52,7 +52,7 @@ public class CourseService {
             return Optional.empty();
 
         Degree degree = course.getDegree();
-        Optional<Degree> optionalDegree = this.degreeService.findByName(degree.getDegreeName());
+        Optional<Degree> optionalDegree = this.degreeService.findDegreeByName(degree.getDegreeName());
         if (optionalDegree.isPresent()) {
             newCourse.setDegree(optionalDegree.get());
             return Optional.of(this.courseRepo.save(newCourse));
@@ -72,7 +72,7 @@ public class CourseService {
 
         newCourse.setCourseName(course.getCourseName());
 
-        Optional<Degree> optionalDegree = this.degreeService.findByName(course.getDegree().getDegreeName());
+        Optional<Degree> optionalDegree = this.degreeService.findDegreeByName(course.getDegree().getDegreeName());
         if (optionalDegree.isEmpty())
             return Optional.empty();
 

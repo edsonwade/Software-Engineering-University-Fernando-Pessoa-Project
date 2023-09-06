@@ -28,8 +28,7 @@ public class AppointmentController {
 
     @GetMapping(value = "/{id}")
     public  ResponseEntity<Optional<Appointment>> getById(@PathVariable("id") Long id) {
-        Optional<Appointment> appointmentOptional = appointmentService.findAppointmentById(id);
-        return ResponseEntity.ok(appointmentOptional);
+        return new ResponseEntity<>(appointmentService.findAppointmentById(id),HttpStatus.OK);
     }
 
     @PostMapping(path = "/create")

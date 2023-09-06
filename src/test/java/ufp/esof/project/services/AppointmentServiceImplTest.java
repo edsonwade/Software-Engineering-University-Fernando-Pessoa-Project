@@ -80,7 +80,7 @@ class AppointmentServiceImplTest {
     @Test
     @DisplayName("Throws exception , when the given id  is not found")
     void testFindAppointementByIdAndThrowsAnException() {
-        when(Optional.of(appointmentRepo.findById((Long) anyLong()))).thenThrow(new ObjectNotFoundById(" the given id was not found"));
+        when(Optional.of(appointmentRepo.findById((Long) anyLong()))).thenReturn(Optional.empty());
         assertThrows(ObjectNotFoundById.class, () -> currentInstance.findAppointmentById(1L));
         verify(this.appointmentRepo).findById( any());
 

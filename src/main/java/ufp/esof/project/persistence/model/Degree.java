@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "tb_degrees")
 @Getter
 @Setter
-public class Degree implements Serializable {
+public class Degree  implements Serializable {
     private static final long serialVersionUID = 1344768769L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,11 @@ public class Degree implements Serializable {
 
     public Degree() {
         //default constructor
+    }
+
+    public Degree(Long degreeId, String degreeName) {
+        this.degreeId = degreeId;
+        this.degreeName = degreeName;
     }
 
     public Degree(String name) {

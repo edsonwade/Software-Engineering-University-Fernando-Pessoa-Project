@@ -18,6 +18,7 @@ public interface AppointmentService {
 
     Appointment createAppointment(Appointment appointment);
 
+    Appointment updateAppointment(long appointmentId,Appointment appointment);
 
     boolean deleteById(Long id);
 
