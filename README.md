@@ -86,6 +86,10 @@ Minimum Required Endpoints:
 7. Testcontainers(Docker Container)
 8. Pipeline CI/CD with Github Actions
 9. Grafana, Prometheus
+10. Spring security
+
+# Code Reviews
+- [Codacy-white](https://app.codacy.com/gh/edsonwade/Software-Engineering-University-Fernando-Pessoa-Project/dashboard)
 
 # Contributing
 - [Vanilson Muhongo](https://www.github.com/edsonwade)
@@ -93,5 +97,3 @@ Minimum Required Endpoints:
 - [Fel Galvão](https://github.com/FelGalvao)
 
 
-# Code Reviews 
-- [Codacy-white](https://app.codacy.com/gh/edsonwade/Software-Engineering-University-Fernando-Pessoa-Project/dashboard)
