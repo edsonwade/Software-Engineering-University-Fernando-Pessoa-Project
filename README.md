@@ -94,4 +94,4 @@ Minimum Required Endpoints:
 
 
 # Code Reviews 
--[Codacy -white](https://app.codacy.com/gh/edsonwade/Software-Engineering-University-Fernando-Pessoa-Project/dashboard)
+-[Codacy-white](https://app.codacy.com/gh/edsonwade/Software-Engineering-University-Fernando-Pessoa-Project/dashboard)
