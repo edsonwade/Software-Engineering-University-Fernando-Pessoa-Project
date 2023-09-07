@@ -14,10 +14,11 @@ public interface AppointmentService {
 
     Iterable<Appointment> findAllAppointments();
 
-    Optional<Appointment> findAppointmentById(Long id);
+    Optional<Appointment> findAppointmentById(long id);
 
     Appointment createAppointment(Appointment appointment);
 
+    Appointment updateAppointment(long appointmentId,Appointment appointment);
 
     boolean deleteById(Long id);
 
