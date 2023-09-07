@@ -1,4 +1,4 @@
-package ufp.esof.project.config;
+package ufp.esof.project.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

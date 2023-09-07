@@ -24,7 +24,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppointmentServiceImpl.class);
 
-    public static final String DOES_NOT_EXISTS = "does not exists";
+    public static final String DOES_NOT_EXISTS = " does not exists";
 
 
     public AppointmentServiceImpl(AppointmentRepo appointmentRepo) {
@@ -46,11 +46,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Optional<Appointment> findAppointmentById(Long appointmentId) {
+    public Optional<Appointment> findAppointmentById(long appointmentId) {
         Optional<Appointment> appointment = appointmentRepo.findById(appointmentId);
         if (appointment.isEmpty()) {
-            logger.error("The appointment with id{}{}", appointmentId, DOES_NOT_EXISTS);
-            throw new ObjectNotFoundById("appointment with id " + appointmentId + DOES_NOT_EXISTS);
+            logger.error("The appointment with id {},{}", appointmentId , DOES_NOT_EXISTS);
+            throw new ObjectNotFoundById("appointment with id "  + appointmentId +  DOES_NOT_EXISTS);
         }
         return appointment;
     }

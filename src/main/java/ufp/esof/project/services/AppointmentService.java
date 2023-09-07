@@ -14,7 +14,7 @@ public interface AppointmentService {
 
     Iterable<Appointment> findAllAppointments();
 
-    Optional<Appointment> findAppointmentById(Long id);
+    Optional<Appointment> findAppointmentById(long id);
 
     Appointment createAppointment(Appointment appointment);
 

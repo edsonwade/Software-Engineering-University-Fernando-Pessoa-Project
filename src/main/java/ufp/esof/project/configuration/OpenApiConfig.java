@@ -1,4 +1,4 @@
-package ufp.esof.project.config;
+package ufp.esof.project.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

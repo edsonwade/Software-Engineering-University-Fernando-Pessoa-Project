@@ -17,6 +17,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class AppointmentServiceImplTest {
+    public static final String DOES_NOT_EXISTS = "appointment with id 0 does not exists";
     /**
      * The Appointment
      */
@@ -66,23 +67,22 @@ class AppointmentServiceImplTest {
     @Test
     @DisplayName("given a specific id and return the appointment")
     void testFindAppointementById() {
-        Optional<Appointment> appointments = Optional.of(createListOfAppointments().get(1));
-        when(Optional.of(appointmentRepo.findById(1L))).thenReturn(Optional.of(appointments));
-        Optional<Appointment> appointmentById = currentInstance.findAppointmentById(1L);
-
-        assertFalse(appointmentById.isPresent());
+        Optional<Appointment> appointments = Optional.of(appointment);
+        when(appointmentRepo.findById(anyLong())).thenReturn(appointments);
+        assertEquals(currentInstance.findAppointmentById(anyLong()), appointments);
+        assertFalse(currentInstance.findAppointmentById(anyLong()).isEmpty());
         assertDoesNotThrow(() -> currentInstance.findAppointmentById(1L));
 
-        verify(appointmentRepo,times(2)).findById(any());
+        verify(appointmentRepo,times(3)).findById(anyLong());
 
     }
 
     @Test
     @DisplayName("Throws exception , when the given id  is not found")
     void testFindAppointementByIdAndThrowsAnException() {
-        when(Optional.of(appointmentRepo.findById((Long) anyLong()))).thenReturn(Optional.empty());
-        assertThrows(ObjectNotFoundById.class, () -> currentInstance.findAppointmentById(1L));
-        verify(this.appointmentRepo).findById( any());
+        when(Optional.of(appointmentRepo.findById(anyLong()))).thenReturn(Optional.empty());
+        assertThrows(ObjectNotFoundById.class, () -> currentInstance.findAppointmentById(anyLong()));
+        verify(this.appointmentRepo).findById( anyLong());
 
     }
 
@@ -101,22 +101,23 @@ class AppointmentServiceImplTest {
     @Test
     @DisplayName("given an specific id ,delete appointment and return true ")
     void testDeleteAppointmentByIdAndReturnTrue() {
-
-        given(appointmentRepo.findById(appointment.getAppointmentId())).willReturn(Optional.of(appointment));
-        doNothing().when(appointmentRepo).deleteById(appointment.getAppointmentId());
-        currentInstance.deleteById(appointment.getAppointmentId());
-        verify(appointmentRepo,times(1)).deleteById(appointment.getAppointmentId());
+        given(appointmentRepo.findById(anyLong())).willReturn(Optional.of(appointment));
+        doNothing().when(appointmentRepo).deleteById(anyLong());
+        currentInstance.deleteById(anyLong());
+        verify(appointmentRepo,times(1)).deleteById(anyLong());
 
     }
 
     @Test
     @DisplayName("given an specific id , return false , when the given id is not found")
     void testDeleteAppointmentByIdReturnFalseWhenTheIdIsNotFound() {
-        Appointment appointments = new Appointment();
-        when(appointmentRepo.findById(appointments.getAppointmentId())).thenReturn(Optional.empty());
-        doNothing().when(appointmentRepo).deleteById(appointments.getAppointmentId());
-        currentInstance.deleteById(appointments.getAppointmentId());
-        verify(appointmentRepo,times(0)).deleteById(appointments.getAppointmentId());
+        when(appointmentRepo.findById(anyLong())).thenReturn(Optional.empty());
+        doNothing().when(appointmentRepo).deleteById(anyLong());
+        ObjectNotFoundById objectNotFoundById = assertThrows(
+                ObjectNotFoundById.class,
+                () -> currentInstance.deleteById(anyLong()));
+        assertEquals(DOES_NOT_EXISTS,objectNotFoundById.getMessage());
+        verify(appointmentRepo,times(0)).deleteById(anyLong());
 
     }
 

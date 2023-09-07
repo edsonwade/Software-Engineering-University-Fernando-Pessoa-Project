@@ -3,6 +3,7 @@ package ufp.esof.project.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.persistence.model.Appointment;
 import ufp.esof.project.services.AppointmentServiceImpl;
 
@@ -28,7 +29,12 @@ public class AppointmentController {
 
     @GetMapping(value = "/{id}")
     public  ResponseEntity<Optional<Appointment>> getById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(appointmentService.findAppointmentById(id),HttpStatus.OK);
+        try {
+            Optional<Appointment> appointment = appointmentService.findAppointmentById(id);
+            return ResponseEntity.ok(appointment);
+        } catch (ObjectNotFoundById exception) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping(path = "/create")
@@ -39,7 +45,12 @@ public class AppointmentController {
     }
     @DeleteMapping(value = "/delete/{id}")
         public ResponseEntity<String> deleteAppointment(@PathVariable("id") Long id) {
-        return ResponseEntity.ok( this.appointmentService.deleteById(id) + " Appointment Deleted Successfully" );
+        boolean deleted = appointmentService.deleteById(id);
+        if (deleted) {
+            return ResponseEntity.ok("Appointment Deleted Successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
+        }
 
     }
 }
