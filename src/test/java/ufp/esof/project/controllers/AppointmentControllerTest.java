@@ -107,6 +107,7 @@ class AppointmentControllerTest {
                 // Assert: Validate the response code
                 .andExpect(status().isNotFound());
     }
+    // TODO: 07/09/2023 - need to fix the create appointment test 
 //    @Test
 //    @DisplayName("POST /api/v1/appointment/create - Success")
 //    void testPostSaveAppointmentSuccess() throws Exception {

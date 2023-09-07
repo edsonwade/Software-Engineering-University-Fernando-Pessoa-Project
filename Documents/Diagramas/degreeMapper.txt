@@ -1,0 +1,57 @@
+@Component
+public class DegreeServiceImpl implements DegreeService {
+
+    private final DegreeRepo degreeRepo;
+    private final DegreeMapper degreeMapper;
+
+    public DegreeServiceImpl(DegreeRepo degreeRepo, DegreeMapper degreeMapper) {
+        this.degreeRepo = degreeRepo;
+        this.degreeMapper = degreeMapper;
+    }
+
+    @Override
+    public Iterable<DegreeDto> findAllDegrees() {
+        Iterable<Degree> degrees = degreeRepo.findAll();
+        return degreeMapper.toDegreeDtoList(degrees);
+    }
+
+    @Override
+    public DegreeDto findDegreeById(long degreeId) {
+        Degree degree = degreeRepo.findById(degreeId)
+                .orElseThrow(() -> new ObjectNotFoundById("Degree with id " + degreeId + " does not exist"));
+        return degreeMapper.toDegreeDto(degree);
+    }
+
+    @Override
+    public DegreeDto findDegreeByName(String degreeName) {
+        Degree degree = degreeRepo.findByDegreeName(degreeName)
+                .orElseThrow(() -> new ObjectNotFoundByName("Degree with name " + degreeName + " does not exist"));
+        return degreeMapper.toDegreeDto(degree);
+    }
+
+    @Override
+    public DegreeDto createDegree(@NotNull DegreeDto degreeDto) {
+        Degree degree = degreeMapper.toDegree(degreeDto);
+        Degree savedDegree = degreeRepo.save(degree);
+        return degreeMapper.toDegreeDto(savedDegree);
+    }
+
+    @Override
+    public DegreeDto updateDegree(long degreeId, @NotNull DegreeDto degreeDto) {
+        Degree degree = degreeRepo.findById(degreeId)
+                .orElseThrow(() -> new ObjectNotFoundById("Degree with id " + degreeId + " does not exist"));
+
+        degreeMapper.updateDegreeFromDto(degreeDto, degree);
+
+        Degree updatedDegree = degreeRepo.save(degree);
+        return degreeMapper.toDegreeDto(updatedDegree);
+    }
+
+    @Override
+    public void deleteDegree(long degreeId) {
+        if (!degreeRepo.existsById(degreeId)) {
+            throw new ObjectNotFoundById("Degree with id " + degreeId + " does not exist");
+        }
+        degreeRepo.deleteById(degreeId);
+    }
+}

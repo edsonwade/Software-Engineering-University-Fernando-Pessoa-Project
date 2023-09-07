@@ -96,7 +96,10 @@ public class DegreeController {
             })
     public ResponseEntity<Optional<Degree>> getDegreeById(@PathVariable("id") Long id) {
         Optional<Degree> degree = degreeService.findDegreeById(id);
-        return  ResponseEntity.ok(degree);
+         if(degree.isEmpty()){
+             throw new ObjectNotFoundById("degree with id " + id + DOES_NOT_EXISTS);
+         }
+         return ResponseEntity.ok(degree);
     }
 
     @CrossOrigin(origins = {"http://localhost:8080",
@@ -165,7 +168,7 @@ public class DegreeController {
         if(degrees.isEmpty()) {
             throw new ObjectNotFoundById("degree with id " + id + DOES_NOT_EXISTS);
         }
-        return ResponseEntity.ok().body(degreeService.updateDegree( id,degree));
+        return ResponseEntity.ok().body(degreeService.updateDegree(id,degree));
 
     }
     @DeleteMapping(value = "/delete/{id}")

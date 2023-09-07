@@ -17,16 +17,14 @@ public class DegreeServiceImpl implements DegreeService {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeServiceImpl.class);
     public static final String DOES_NOT_EXISTS = " does not exists";
+    public static final String DEGREE_WITH_NAME = "degree with name ";
+    public static final String DEGREE_WITH_ID = "degree with id ";
 
     private final DegreeRepo degreeRepo;
-    private final CourseRepo courseRepo;
-    private final CollegeService collegeService;
 
-
+    @SuppressWarnings("unused")
     public DegreeServiceImpl(DegreeRepo degreeRepo, CollegeService collegeService, CourseRepo courseRepo) {
         this.degreeRepo = degreeRepo;
-        this.collegeService = collegeService;
-        this.courseRepo = courseRepo;
     }
 
 
@@ -41,7 +39,7 @@ public class DegreeServiceImpl implements DegreeService {
         Optional<Degree> degree = degreeRepo.findById(degreeId);
         if (degree.isEmpty()) {
             logger.error("The degree with id{} {}", degreeId, DOES_NOT_EXISTS);
-            throw new ObjectNotFoundById("degree with id " + degreeId + DOES_NOT_EXISTS);
+            throw new ObjectNotFoundById(DEGREE_WITH_ID + degreeId + DOES_NOT_EXISTS);
         }
         return degree;
     }
@@ -50,7 +48,7 @@ public class DegreeServiceImpl implements DegreeService {
     public Optional<Degree> findDegreeByName(String degreeName) {
         Optional<Degree> degree = degreeRepo.findByDegreeName(degreeName);
         if (degree.isEmpty()) {
-            throw new ObjectNotFoundByName("degree with name " + degreeName + DOES_NOT_EXISTS);
+            throw new ObjectNotFoundByName(DEGREE_WITH_NAME + degreeName + DOES_NOT_EXISTS);
         }
         return degree;
     }
@@ -64,7 +62,7 @@ public class DegreeServiceImpl implements DegreeService {
     public Degree updateDegree(long degreeId, @NotNull Degree degree) {
         Optional<Degree> degrees = degreeRepo.findById(degreeId);
         if (degrees.isEmpty()) {
-            throw new ObjectNotFoundByName("degree with name " + degreeId + DOES_NOT_EXISTS);
+            throw new ObjectNotFoundByName(DEGREE_WITH_NAME + degreeId + DOES_NOT_EXISTS);
         }
         Degree newDegree = new Degree();
         newDegree.setDegreeId(degree.getDegreeId());
@@ -80,7 +78,7 @@ public class DegreeServiceImpl implements DegreeService {
     public void deleteDegree(long degreeId) {
         if (!degreeRepo.existsById(degreeId)) {
             throw new ObjectNotFoundById(
-                    "Degree with id " + degreeId + " does not exists");
+                    DEGREE_WITH_ID + degreeId + DOES_NOT_EXISTS);
         }
         degreeRepo.deleteById(degreeId);
 

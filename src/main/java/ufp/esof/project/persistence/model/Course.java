@@ -1,6 +1,7 @@
 package ufp.esof.project.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "tb_courses")
+@JsonIgnoreProperties("degree")
 public class Course implements Serializable {
     private static final long serialVersionUID = -2062070712995046595L;
 
@@ -39,6 +41,11 @@ public class Course implements Serializable {
 
     public Course(String name) {
         this.setCourseName(name);
+    }
+
+    public Course(Long courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
     }
 
     public void addExplainer(Explainer explainer) {
