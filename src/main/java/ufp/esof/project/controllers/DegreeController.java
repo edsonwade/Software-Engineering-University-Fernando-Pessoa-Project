@@ -9,11 +9,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.persistence.model.Degree;
 import ufp.esof.project.services.DegreeServiceImpl;
 import ufp.esof.project.utils.MediaType;
 
+import javax.validation.Valid;
 import java.util.Optional;
+
+import static ufp.esof.project.services.DegreeServiceImpl.DOES_NOT_EXISTS;
 
 @RestController
 @RequestMapping("/api/v1/degree")
@@ -97,7 +101,7 @@ public class DegreeController {
 
     @CrossOrigin(origins = {"http://localhost:8080",
             "http://localhost:8082"})
-    @PostMapping(value = "/person/createNewPerson",
+    @PostMapping(value = "/createNewDegree",
             produces = {MediaType.APPLICATION_JSON,
                     MediaType.APPLICATION_XML,
                     MediaType.APPLICATION_YML},
@@ -123,8 +127,77 @@ public class DegreeController {
                             , responseCode = "500"
                             , content = @Content)
             })
-    public ResponseEntity<Degree> createDegree(@RequestBody Degree degree) {
+    public ResponseEntity<Degree> createDegree(@Valid @RequestBody Degree degree) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(degreeService.createDegree(degree));
     }
+
+    @PutMapping(value = "/update/{id}",
+            produces = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML},
+            consumes = {MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_XML,
+                    MediaType.APPLICATION_YML})
+    @Operation(summary = "Update a Degree by passing" +
+            "in Json ,XML, OR YAML representation of Degree ",
+            description = "Updated",
+            tags = {"Degree"},
+            responses = {
+                    @ApiResponse(description = "Success"
+                            , responseCode = "200"
+                            , content = @Content(schema = @Schema(implementation = Degree.class), mediaType = "application/json")),
+                    @ApiResponse(description = "Bad Request"
+                            , responseCode = "400"
+                            , content = @Content),
+                    @ApiResponse(description = "Unauthorized"
+                            , responseCode = "401"
+                            , content = @Content),
+                    @ApiResponse(description = "Not Found"
+                            , responseCode = "404"
+                            , content = @Content),
+                    @ApiResponse(description = "Internal Error"
+                            , responseCode = "500"
+                            , content = @Content)
+            })
+    public ResponseEntity<Degree> updateDegree(@PathVariable(value = "id") Integer id, @Valid @RequestBody Degree degree) {
+        Optional<Degree> degrees = degreeService.findDegreeById(id);
+        if(degrees.isEmpty()) {
+            throw new ObjectNotFoundById("degree with id " + id + DOES_NOT_EXISTS);
+        }
+        return ResponseEntity.ok().body(degreeService.updateDegree( id,degree));
+
+    }
+    @DeleteMapping(value = "/delete/{id}")
+    @Operation(summary = "Delete a Degree by Id",
+            description = "Delete",
+            tags = {"Degree"},
+            responses = {
+                    @ApiResponse(description = "No Content"
+                            , responseCode = "204"
+                            , content = @Content),
+                    @ApiResponse(description = "Bad Request"
+                            , responseCode = "400"
+                            , content = @Content),
+                    @ApiResponse(description = "Unauthorized"
+                            , responseCode = "401"
+                            , content = @Content),
+                    @ApiResponse(description = "Not Found"
+                            , responseCode = "404"
+                            , content = @Content),
+                    @ApiResponse(description = "Internal Error"
+                            , responseCode = "500"
+                            , content = @Content)
+            })
+    public ResponseEntity<Object> deleteParkingSpotById(@PathVariable(value = "id") int id) {
+        Optional<Degree> degree = degreeService.findDegreeById(id);
+        if(degree.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Degree  with id " + id + " was  not found");
+        }
+         degreeService.deleteDegree(id);
+        return ResponseEntity.status(HttpStatus.OK).body(" Degree with id " + id +" deleted with successfully ");
+    }
 }
+
+
+
