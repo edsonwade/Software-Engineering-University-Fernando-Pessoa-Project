@@ -1,6 +1,6 @@
 package ufp.esof.project.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,15 +26,26 @@ public class College implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "college", cascade = CascadeType.PERSIST)
-    @JsonIgnore
+    @JsonIgnoreProperties("college")
     private Set<Degree> degrees = new HashSet<>();
 
     public College() {
         // default constructor
     }
 
+    public College(Long collegeId, String name) {
+        this.collegeId = collegeId;
+        this.name = name;
+    }
+
     public College(String name) {
         this.setName(name);
+    }
+
+    public College(Long collegeId, String name, Set<Degree> degrees) {
+        this.collegeId = collegeId;
+        this.name = name;
+        this.degrees = degrees;
     }
 
     @Override

@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class DegreeServiceImplTest {
 
 
-    public static final String EXPECTED_MESSAGE = "Degree with id 0 does not exists";
+    public static final String EXPECTED_MESSAGE = "degree with id 0 does not exists";
     public DegreeRepo degreeRepoMock;
 
     public CourseRepo courseMock;
