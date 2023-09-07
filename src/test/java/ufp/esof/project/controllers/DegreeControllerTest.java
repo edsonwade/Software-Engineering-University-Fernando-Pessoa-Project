@@ -1,5 +1,6 @@
 package ufp.esof.project.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ufp.esof.project.exception.CustomJsonSerializationException;
 import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.persistence.model.College;
 import ufp.esof.project.persistence.model.Degree;
@@ -136,12 +138,12 @@ class DegreeControllerTest {
      * @param obj object
      * @return obj
      */
-    private String asJsonString(final Object obj) {
+    private String asJsonString(final Object obj) throws CustomJsonSerializationException {
         try {
             final ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new CustomJsonSerializationException("Failed to serialize object to JSON", e);
         }
     }
 
