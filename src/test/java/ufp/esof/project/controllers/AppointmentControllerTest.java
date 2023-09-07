@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertTrue;
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -107,8 +107,7 @@ class AppointmentControllerTest {
         this.mockMvc
                 .perform(get("/api/v1/appointment/{id}", 1L)) // Assuming you're testing with ID 1
                 .andExpect(status().isNotFound());
-        //Add an assertion to satisfy Sonar
-        assertTrue(true);
+
     }
     // TODO: 07/09/2023 - need to fix the create appointment test 
 //    @Test
@@ -165,7 +164,7 @@ class AppointmentControllerTest {
     }
 
     // Helper method to convert an object to JSON string
-    private String asJsonString(final Object obj) throws CustomJsonSerializationException{
+    protected String asJsonString(final Object obj) throws CustomJsonSerializationException{
         try {
             final ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(obj);
