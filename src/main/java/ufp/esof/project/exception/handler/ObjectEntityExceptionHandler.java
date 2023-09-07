@@ -9,6 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ufp.esof.project.exception.ObjectExceptionResponse;
 import ufp.esof.project.exception.ObjectNotFoundById;
+import ufp.esof.project.exception.ObjectNotFoundByName;
 import ufp.esof.project.exception.RequiredObjectIsNullException;
 
 import java.time.ZoneId;
@@ -28,7 +29,7 @@ public class ObjectEntityExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(objectExceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = ObjectNotFoundById.class)
+    @ExceptionHandler(value = {ObjectNotFoundById.class, ObjectNotFoundByName.class})
     public final ResponseEntity<ObjectExceptionResponse> handleBadRequest(
             Exception e, WebRequest webRequest) {
         ObjectExceptionResponse objectExceptionResponse = new ObjectExceptionResponse(
