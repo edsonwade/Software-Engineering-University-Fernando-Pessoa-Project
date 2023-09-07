@@ -1,6 +1,7 @@
 package ufp.esof.project.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Table(name = "tb_degrees")
 @Getter
 @Setter
+@JsonIgnoreProperties("courses")
 public class Degree  implements Serializable {
     private static final long serialVersionUID = 1344768769L;
     @Id
@@ -26,7 +28,6 @@ public class Degree  implements Serializable {
     private String degreeName;
 
     @OneToMany(mappedBy = "degree", cascade = CascadeType.PERSIST)
-    @JsonBackReference
     private Set<Course> courses = new HashSet<>();
 
     @ManyToOne(cascade = {CascadeType.PERSIST})

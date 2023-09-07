@@ -1,6 +1,6 @@
 package ufp.esof.project.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +26,7 @@ public class College implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "college", cascade = CascadeType.PERSIST)
-    @JsonBackReference
+    @JsonIgnore
     private Set<Degree> degrees = new HashSet<>();
 
     public College() {

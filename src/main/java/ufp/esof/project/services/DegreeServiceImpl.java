@@ -5,20 +5,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ufp.esof.project.exception.ObjectNotFoundById;
 import ufp.esof.project.exception.ObjectNotFoundByName;
-import ufp.esof.project.exception.RequiredObjectIsNullException;
 import ufp.esof.project.persistence.model.Degree;
 import ufp.esof.project.persistence.repositories.CourseRepo;
 import ufp.esof.project.persistence.repositories.DegreeRepo;
 
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
 public class DegreeServiceImpl implements DegreeService {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeServiceImpl.class);
-    public static final String DOES_NOT_EXISTS = "does not exists";
+    public static final String DOES_NOT_EXISTS = " does not exists";
 
     private final DegreeRepo degreeRepo;
     private final CourseRepo courseRepo;
@@ -42,7 +40,7 @@ public class DegreeServiceImpl implements DegreeService {
     public Optional<Degree> findDegreeById(long degreeId) {
         Optional<Degree> degree = degreeRepo.findById(degreeId);
         if (degree.isEmpty()) {
-            logger.error("The degree with id{}{}", degreeId, DOES_NOT_EXISTS);
+            logger.error("The degree with id{} {}", degreeId, DOES_NOT_EXISTS);
             throw new ObjectNotFoundById("degree with id " + degreeId + DOES_NOT_EXISTS);
         }
         return degree;
@@ -63,13 +61,10 @@ public class DegreeServiceImpl implements DegreeService {
     }
 
     @Override
-    public Degree updateDegree(long degreeId, Degree degree) {
+    public Degree updateDegree(long degreeId, @NotNull Degree degree) {
         Optional<Degree> degrees = degreeRepo.findById(degreeId);
         if (degrees.isEmpty()) {
             throw new ObjectNotFoundByName("degree with name " + degreeId + DOES_NOT_EXISTS);
-        }
-        if (Objects.isNull(degree)) {
-            throw new RequiredObjectIsNullException();
         }
         Degree newDegree = new Degree();
         newDegree.setDegreeId(degree.getDegreeId());

@@ -1,11 +1,8 @@
 package ufp.esof.project.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,13 +27,10 @@ public class Course implements Serializable {
     private String courseName;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JsonBackReference
     private Set<Explainer> explainers = new HashSet<>();
 
     @ManyToOne(optional = false,cascade = {CascadeType.PERSIST})
-    @EqualsAndHashCode.Exclude
     @JsonBackReference
-    @NotFound(action = NotFoundAction.IGNORE)
     private Degree degree;
 
     public Course() {
