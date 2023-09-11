@@ -41,8 +41,12 @@ class DegreeControllerTest {
         degree = new Degree(1L, "Data Analytic", new HashSet<>(), new College("Oxford University"));
     }
 
+     /**
+     * Method under test: {@link UrlCompressController#generateShortUrl(String)}
+     */
     @Test
     @DisplayName("GET /api/v1/degree - Success")
+    
     void testGetAllDegrees() throws Exception {
         when(degreeServiceMock.findAllDegree())
                 .thenReturn(List.of(
